@@ -32,7 +32,7 @@ public class ratLabAPI {
 
 
     @RequestMapping("/")
-    public String hell(){
+    public String hello(){
         return "hello";
     }
     @RequestMapping("/list")

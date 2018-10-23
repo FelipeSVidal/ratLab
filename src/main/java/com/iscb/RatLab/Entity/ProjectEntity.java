@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Project", schema = "ratLab")
+@Table(name = "project", schema = "ratLab")
 @IdClass(ProjectEntityPK.class)
 public class ProjectEntity {
     private int idProject;
@@ -13,7 +13,8 @@ public class ProjectEntity {
     private int teamIdTeam;
 
     @Id
-    @Column(name = "idProject")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_project")
     public int getIdProject() {
         return idProject;
     }
@@ -23,7 +24,7 @@ public class ProjectEntity {
     }
 
     @Basic
-    @Column(name = "nameProject")
+    @Column(name = "name_project")
     public String getNameProject() {
         return nameProject;
     }
@@ -33,7 +34,7 @@ public class ProjectEntity {
     }
 
     @Id
-    @Column(name = "Laboratory_idLaboratory")
+    @Column(name = "laboratory_id_laboratory")
     public int getLaboratoryIdLaboratory() {
         return laboratoryIdLaboratory;
     }
@@ -43,7 +44,7 @@ public class ProjectEntity {
     }
 
     @Id
-    @Column(name = "Team_idTeam")
+    @Column(name = "team_id_team")
     public int getTeamIdTeam() {
         return teamIdTeam;
     }

@@ -1,18 +1,16 @@
 package com.iscb.RatLab.Entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Team", schema = "ratLab")
+@Table(name = "team", schema = "ratLab")
 public class TeamEntity {
     private int idTeam;
 
     @Id
-    @Column(name = "idTeam")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_team")
     public int getIdTeam() {
         return idTeam;
     }

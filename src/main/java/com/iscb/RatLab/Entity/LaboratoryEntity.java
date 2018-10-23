@@ -4,13 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Laboratory", schema = "ratLab")
+@Table(name = "laboratory", schema = "ratLab")
 public class LaboratoryEntity {
     private int idLaboratory;
     private String nameLaboratory;
 
     @Id
-    @Column(name = "idLaboratory")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_laboratory")
     public int getIdLaboratory() {
         return idLaboratory;
     }
@@ -20,7 +21,7 @@ public class LaboratoryEntity {
     }
 
     @Basic
-    @Column(name = "nameLaboratory")
+    @Column(name = "name_Laboratory")
     public String getNameLaboratory() {
         return nameLaboratory;
     }

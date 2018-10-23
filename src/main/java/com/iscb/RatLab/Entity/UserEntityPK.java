@@ -9,7 +9,7 @@ public class UserEntityPK implements Serializable {
     private int idUser;
     private int userTypeIdUserType;
 
-    @Column(name = "idUser")
+    @Column(name = "id_user")
     @Id
     public int getIdUser() {
         return idUser;
@@ -19,7 +19,7 @@ public class UserEntityPK implements Serializable {
         this.idUser = idUser;
     }
 
-    @Column(name = "UserType_idUserType")
+    @Column(name = "user_type_id_user_type")
     @Id
     public int getUserTypeIdUserType() {
         return userTypeIdUserType;

@@ -10,7 +10,7 @@ public class ProjectEntityPK implements Serializable {
     private int laboratoryIdLaboratory;
     private int teamIdTeam;
 
-    @Column(name = "idProject")
+    @Column(name = "id_project")
     @Id
     public int getIdProject() {
         return idProject;
@@ -20,7 +20,7 @@ public class ProjectEntityPK implements Serializable {
         this.idProject = idProject;
     }
 
-    @Column(name = "Laboratory_idLaboratory")
+    @Column(name = "laboratory_id_laboratory")
     @Id
     public int getLaboratoryIdLaboratory() {
         return laboratoryIdLaboratory;
@@ -30,7 +30,7 @@ public class ProjectEntityPK implements Serializable {
         this.laboratoryIdLaboratory = laboratoryIdLaboratory;
     }
 
-    @Column(name = "Team_idTeam")
+    @Column(name = "team_id_team")
     @Id
     public int getTeamIdTeam() {
         return teamIdTeam;

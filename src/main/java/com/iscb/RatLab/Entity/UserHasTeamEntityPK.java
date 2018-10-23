@@ -1,18 +1,17 @@
 package com.iscb.RatLab.Entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
-@Table(name = "user_has_team", schema = "ratLab")
-@IdClass(UserHasTeamEntityPK.class)
-public class UserHasTeamEntity {
+public class UserHasTeamEntityPK implements Serializable {
     private int userIdUser;
     private int userUserTypeIdUserType;
     private int teamIdTeam;
 
-    @Id
     @Column(name = "user_id_user")
+    @Id
     public int getUserIdUser() {
         return userIdUser;
     }
@@ -21,8 +20,8 @@ public class UserHasTeamEntity {
         this.userIdUser = userIdUser;
     }
 
-    @Id
     @Column(name = "user_user_type_id_user_type")
+    @Id
     public int getUserUserTypeIdUserType() {
         return userUserTypeIdUserType;
     }
@@ -31,8 +30,8 @@ public class UserHasTeamEntity {
         this.userUserTypeIdUserType = userUserTypeIdUserType;
     }
 
-    @Id
     @Column(name = "team_id_team")
+    @Id
     public int getTeamIdTeam() {
         return teamIdTeam;
     }
@@ -45,7 +44,7 @@ public class UserHasTeamEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserHasTeamEntity that = (UserHasTeamEntity) o;
+        UserHasTeamEntityPK that = (UserHasTeamEntityPK) o;
         return userIdUser == that.userIdUser &&
                 userUserTypeIdUserType == that.userUserTypeIdUserType &&
                 teamIdTeam == that.teamIdTeam;

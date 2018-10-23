@@ -5,19 +5,15 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.url">jdbc:mysql://localhost:3306/ratLab</property>
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <mapping class="com.iscb.RatLab.Entity.BoxEntity"/>
         <mapping class="com.iscb.RatLab.Entity.LaboratoryEntity"/>
         <mapping class="com.iscb.RatLab.Entity.ProjectEntity"/>
         <mapping class="com.iscb.RatLab.Entity.RatEntity"/>
         <mapping class="com.iscb.RatLab.Entity.TeamEntity"/>
         <mapping class="com.iscb.RatLab.Entity.UserEntity"/>
-        <mapping class="com.iscb.RatLab.Entity.UserTypeEntity"/>
         <mapping class="com.iscb.RatLab.Entity.UserHasTeamEntity"/>
-        <!-- <property name="connection.username"/> -->
-        <!-- <property name="connection.password"/> -->
-
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hbm2ddl.auto">update</property> -->
+        <mapping class="com.iscb.RatLab.Entity.UserTypeEntity"/>
+        <mapping class="com.iscb.RatLab.Entity.UserTypeEntity"/>
     </session-factory>
 </hibernate-configuration>

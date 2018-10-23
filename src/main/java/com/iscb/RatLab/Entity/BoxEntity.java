@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Box", schema = "ratLab")
+@Table(name = "box", schema = "ratLab")
 @IdClass(BoxEntityPK.class)
 public class BoxEntity {
     private int idBox;
@@ -13,9 +13,12 @@ public class BoxEntity {
     private Date createdBox;
     private Date lastModifiBox;
     private int projectIdProject;
+    private int projectLaboratoryIdLaboratory;
+    private int projectTeamIdTeam;
 
     @Id
-    @Column(name = "idBox")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_box")
     public int getIdBox() {
         return idBox;
     }
@@ -25,7 +28,7 @@ public class BoxEntity {
     }
 
     @Basic
-    @Column(name = "nRatsBox")
+    @Column(name = "n_rats_box")
     public int getnRatsBox() {
         return nRatsBox;
     }
@@ -35,7 +38,7 @@ public class BoxEntity {
     }
 
     @Basic
-    @Column(name = "createdBox")
+    @Column(name = "created_box")
     public Date getCreatedBox() {
         return createdBox;
     }
@@ -45,7 +48,7 @@ public class BoxEntity {
     }
 
     @Basic
-    @Column(name = "lastModifiBox")
+    @Column(name = "last_modifi_box")
     public Date getLastModifiBox() {
         return lastModifiBox;
     }
@@ -55,13 +58,33 @@ public class BoxEntity {
     }
 
     @Id
-    @Column(name = "Project_idProject")
+    @Column(name = "project_id_project")
     public int getProjectIdProject() {
         return projectIdProject;
     }
 
     public void setProjectIdProject(int projectIdProject) {
         this.projectIdProject = projectIdProject;
+    }
+
+    @Id
+    @Column(name = "project_laboratory_id_laboratory")
+    public int getProjectLaboratoryIdLaboratory() {
+        return projectLaboratoryIdLaboratory;
+    }
+
+    public void setProjectLaboratoryIdLaboratory(int projectLaboratoryIdLaboratory) {
+        this.projectLaboratoryIdLaboratory = projectLaboratoryIdLaboratory;
+    }
+
+    @Id
+    @Column(name = "project_team_id_team")
+    public int getProjectTeamIdTeam() {
+        return projectTeamIdTeam;
+    }
+
+    public void setProjectTeamIdTeam(int projectTeamIdTeam) {
+        this.projectTeamIdTeam = projectTeamIdTeam;
     }
 
     @Override
@@ -72,6 +95,8 @@ public class BoxEntity {
         return idBox == boxEntity.idBox &&
                 nRatsBox == boxEntity.nRatsBox &&
                 projectIdProject == boxEntity.projectIdProject &&
+                projectLaboratoryIdLaboratory == boxEntity.projectLaboratoryIdLaboratory &&
+                projectTeamIdTeam == boxEntity.projectTeamIdTeam &&
                 Objects.equals(createdBox, boxEntity.createdBox) &&
                 Objects.equals(lastModifiBox, boxEntity.lastModifiBox);
     }
@@ -79,6 +104,6 @@ public class BoxEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(idBox, nRatsBox, createdBox, lastModifiBox, projectIdProject);
+        return Objects.hash(idBox, nRatsBox, createdBox, lastModifiBox, projectIdProject, projectLaboratoryIdLaboratory, projectTeamIdTeam);
     }
 }

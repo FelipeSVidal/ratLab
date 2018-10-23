@@ -4,13 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "UserType", schema = "ratLab")
+@Table(name = "user_type", schema = "ratLab")
 public class UserTypeEntity {
     private int idUserType;
-    private int userType;
+    private String userType;
 
     @Id
-    @Column(name = "idUserType")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user_type")
     public int getIdUserType() {
         return idUserType;
     }
@@ -20,12 +21,12 @@ public class UserTypeEntity {
     }
 
     @Basic
-    @Column(name = "UserType")
-    public int getUserType() {
+    @Column(name = "user_type")
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 
@@ -35,7 +36,7 @@ public class UserTypeEntity {
         if (o == null || getClass() != o.getClass()) return false;
         UserTypeEntity that = (UserTypeEntity) o;
         return idUserType == that.idUserType &&
-                userType == that.userType;
+                Objects.equals(userType, that.userType);
     }
 
     @Override

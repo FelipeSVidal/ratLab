@@ -1,5 +1,8 @@
 package com.iscb.RatLab.Security;
 
+import com.iscb.RatLab.Entity.UserEntity;
+import com.iscb.RatLab.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,18 +13,25 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 public class securityWebAdapter  extends WebSecurityConfigurerAdapter {
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder PEC = new PasswordEncoderConfig().customPasswordEncoder();
-        auth.inMemoryAuthentication()
-                .passwordEncoder(PEC)
-                .withUser("admin")
-                .password(PEC.encode("admin"))
-                .roles("ADMIN");
+        List<UserEntity> userEntityList = (List) userRepository.findAll();
+        for(UserEntity userEntity : userEntityList) {
+            auth.inMemoryAuthentication()
+                    .passwordEncoder(PEC)
+                    .withUser(userEntity.getNameUser())
+                    .password(PEC.encode(userEntity.getPasswordUser()))
+                    .roles("ADMIN");
+        }
     }
 
     @Override
@@ -36,6 +46,6 @@ public class securityWebAdapter  extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/static/style/**");
+        web.ignoring().antMatchers("/static/style/**", "/templates/**");
     }
 }

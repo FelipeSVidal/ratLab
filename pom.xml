@@ -101,7 +101,10 @@
 			<artifactId>webjars-locator</artifactId>
 			<version>${webjars-locator.version}</version>
 		</dependency>
-
+		<dependency>
+		<groupId>nz.net.ultraq.thymeleaf</groupId>
+		<artifactId>thymeleaf-layout-dialect</artifactId>
+	</dependency>
 	</dependencies>
 
 	<build>

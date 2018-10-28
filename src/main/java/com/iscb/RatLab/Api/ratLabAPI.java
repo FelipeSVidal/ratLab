@@ -58,9 +58,10 @@ public class ratLabAPI {
         return modelAndView;
     }
 
+
     @RequestMapping("/user/getall")
     public ModelAndView user_getall(){
-        ModelAndView modelAndView = new ModelAndView("/hello");
+        ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("list", userRepository.findAll());
 
         return modelAndView;

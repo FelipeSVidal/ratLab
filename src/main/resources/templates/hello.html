@@ -14,9 +14,16 @@
 
         Hello world!
 
+        <div th:each="lista : ${list}">
+            <tr>
+                <td th:text="${lista.getNameUser()}"></td>
+            </tr>
+        </div>
+
     </div>
 
     <!-- /.container -->
 
 </section>
+
 </html>

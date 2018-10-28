@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface UserTypeRepository extends CrudRepository<UserTypeEntity, Integer> {
-        List<UserTypeEntity> findAllByUserType(String s);
+        List<UserTypeEntity> findAllByIdUserType(int i);
 }

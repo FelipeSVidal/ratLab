@@ -11,7 +11,7 @@
         <header class="main-header">
 
             <!-- Logo -->
-            <a href="index2.html" class="logo">
+            <a href="/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
@@ -200,8 +200,9 @@
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">HEADER</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                <li class="active"><a href="/user/add"><i class="fa fa-link"></i> <span>Add user</span></a></li>
+             <!--   <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li> -->
+                <li><a href="/user/getall"><i class="fa fa-leaf"><span> Listar </span></i> </a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                         <span class="pull-right-container">
@@ -219,21 +220,23 @@
         <!-- /.sidebar -->
     </aside>
         <!-- Conteudo Central -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" >
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Page Header
-                    <small>Optional description</small>
+                    <td th:text="${title}"></td>
+                    <small th:text="${description}"></small>
                 </h1>
+                <!--
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
                     <li class="active">Here</li>
                 </ol>
+                -->
             </section>
 
             <!-- Main content -->
-            <section class="content container-fluid" layout:fragment="content">
+            <section class="content container-fluid" layout:fragment="content-central" >
 
                 <!--------------------------
                   | Your Page Content Here |

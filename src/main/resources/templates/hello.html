@@ -4,21 +4,16 @@
       xmlns="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layout/DefaultLayout}">
 <head>
-    <title>Hello world</title>
+    <title layout:fragment="title">Página inicial</title>
 </head>
 
-<section layout:fragment="content">
+<section layout:fragment="content-central">
     <!-- Page Content -->
 
     <div class="container">
 
         Hello world!
 
-        <div th:each="lista : ${list}">
-            <tr>
-                <td th:text="${lista.getNameUser()}"></td>
-            </tr>
-        </div>
 
     </div>
 

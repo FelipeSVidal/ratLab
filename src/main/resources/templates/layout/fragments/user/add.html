@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+<head>
+    <title layout:fragment="title">Adicionar Usuário</title>
+</head>
+
+<section layout:fragment="content-central">
+    <!-- Page Content -->
+
+        <form method="post" action="/user/add">
+
+                <div class="form-group">
+                    <label for="inputName">Nome: </label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Nome do Usuário" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">Email: </label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email do usuário" aria-describedby="infoEmail" name="email" required>
+                    <small id="infoEmail" class="form-text text-muted">Utilizado para realizar login no sistema.</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Senha: </label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Senha do usuário" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputTypeUser">Tipo de Usuário: </label>
+                    <select id="inputTypeUser" class="form-control" name="typeid" required>
+                        <option value="2">Aluno</option>
+                        <option value="1">Supervisor</option>
+                        <option value="0">Administrador</option>
+                    </select>
+                </div>
+            <button type="submit" class="btn btn-primary"> Adicionar </button>
+        </form>
+
+
+
+    <!-- /.container -->
+
+</section>
+
+</html>

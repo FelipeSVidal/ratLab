@@ -39,6 +39,8 @@ public class ratLabAPI {
     @RequestMapping("/")
     public ModelAndView hello(){
         ModelAndView modelAndView = new ModelAndView("/hello");
+        modelAndView.addObject("title", "Página inicial");
+        modelAndView.addObject("description", "Página inicial do sistema");
         return modelAndView;
     }
 
@@ -51,10 +53,13 @@ public class ratLabAPI {
     }
 
     @RequestMapping("/user/getbyid")
-    public ModelAndView user_getbyid(@RequestParam(value = "id", defaultValue = "0") int id){
+    public ModelAndView user_getbyid(@RequestParam(value = "id", defaultValue = "-1") int id){
         ModelAndView modelAndView = new ModelAndView("/hello");
-        modelAndView.addObject("list", userRepository.findById(id));
+        if(id == -1){
 
+        }else {
+            modelAndView.addObject("user", userRepository.findById(id));
+        }
         return modelAndView;
     }
 
@@ -62,7 +67,9 @@ public class ratLabAPI {
     @RequestMapping("/user/getall")
     public ModelAndView user_getall(){
         ModelAndView modelAndView = new ModelAndView("hello");
-        modelAndView.addObject("list", userRepository.findAll());
+        modelAndView.addObject("title");
+        modelAndView.addObject("description");
+        modelAndView.addObject("user_list", userRepository.findAll());
 
         return modelAndView;
     }
@@ -75,7 +82,15 @@ public class ratLabAPI {
         return modelAndView;
     }
 
-    @RequestMapping("/user/add")
+    @RequestMapping(value = "/user/add", method = RequestMethod.GET)
+    public ModelAndView user_adding(){
+        ModelAndView modelAndView = new ModelAndView("/layout/fragments/user/add");
+        modelAndView.addObject("title", "Adicionar Usuário");
+        modelAndView.addObject("description", "Adicione um novo usuário");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public ModelAndView user_add(
             @RequestParam(value = "name", defaultValue = "") String name,
             @RequestParam(value = "email", defaultValue = "") String email,

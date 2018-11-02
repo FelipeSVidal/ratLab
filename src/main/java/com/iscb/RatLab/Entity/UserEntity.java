@@ -1,5 +1,6 @@
 package com.iscb.RatLab.Entity;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -7,18 +8,23 @@ import java.util.Objects;
 @Table(name = "user", schema = "ratLab")
 @IdClass(UserEntityPK.class)
 public class UserEntity {
+
     private int idUser;
+
     private String nameUser;
     private String emailUser;
     private String passwordUser;
     private int userTypeIdUserType;
 
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getIdUser() {
         return idUser;
     }
+
+
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;

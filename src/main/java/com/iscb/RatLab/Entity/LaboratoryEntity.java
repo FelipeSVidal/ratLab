@@ -8,6 +8,8 @@ import java.util.Objects;
 public class LaboratoryEntity {
     private int idLaboratory;
     private String nameLaboratory;
+    private int userIdUser;
+    private int userUserTypeIdUserType1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,5 +45,25 @@ public class LaboratoryEntity {
     public int hashCode() {
 
         return Objects.hash(idLaboratory, nameLaboratory);
+    }
+
+    @Basic
+    @Column(name = "user_id_user")
+    public int getUserIdUser() {
+        return userIdUser;
+    }
+
+    public void setUserIdUser(int userIdUser) {
+        this.userIdUser = userIdUser;
+    }
+
+    @Basic
+    @Column(name = "user_user_type_id_user_type1")
+    public int getUserUserTypeIdUserType1() {
+        return userUserTypeIdUserType1;
+    }
+
+    public void setUserUserTypeIdUserType1(int userUserTypeIdUserType1) {
+        this.userUserTypeIdUserType1 = userUserTypeIdUserType1;
     }
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+<section layout:fragment="content-central">
+    <div class="box">
+        <div class="box-header"></div>
+        <div class="box-body">
+
+            <div class="form-inline">
+                 <div class="col-sm-12">
+                    <table id="tabela" class="table table-hover table-bordered " role="grid">
+                    <thead>
+                    <tr role="row">
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Tipo</th>
+                        <th>Detalhes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <th:block th:each=" user : ${users}">
+                        <tr role="row">
+                            <!--/*@thymesVar id="user" type="com.iscb.RatLab.Entity.UserEntity"*/-->
+                            <td th:text="${user.getIdUser()}"></td>
+                            <td th:text="${user.getNameUser()}"></td>
+                            <td th:text="${user.getEmailUser()}"></td>
+                            <td th:text="${types.get(user.getUserTypeIdUserType() - 1).getUserType()}"></td>
+                            <td>
+                                <button class="fa fa-search"
+                                        th:onclick="|getbyid('${user.getIdUser()}', '${types.get(user.getUserTypeIdUserType() - 1).getIdUserType()}')|">
+                                </button>
+                            </td>
+                        </tr>
+
+                    </th:block>
+
+
+                    </tbody>
+
+
+
+                </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+<div layout:fragment="extra-scripts">
+    <script>
+        $(document).ready(function() {
+            $('#tabela').DataTable();
+        } );
+        function getbyid(id, type) {
+            $.redirect("/user/getbyid",{id: id, type: type});
+        }
+    </script>
+</div>
+
+</html>

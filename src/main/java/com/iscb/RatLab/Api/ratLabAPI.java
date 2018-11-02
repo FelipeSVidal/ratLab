@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -52,13 +54,43 @@ public class ratLabAPI {
         return authentication.getPrincipal();
     }
 
-    @RequestMapping("/user/getbyid")
-    public ModelAndView user_getbyid(@RequestParam(value = "id", defaultValue = "-1") int id){
-        ModelAndView modelAndView = new ModelAndView("/hello");
-        if(id == -1){
+
+    @RequestMapping(value = "/user/getbyid")
+    public ModelAndView user_getbyid(@RequestParam(value = "id", defaultValue = "null") int id,
+                                     @RequestParam(value = "type", defaultValue = "null") int type){
+        UserEntityPK userEntityPK = new UserEntityPK();
+        userEntityPK.setIdUser(id);
+        userEntityPK.setUserTypeIdUserType(type);
+
+        return user_getbyPK(userEntityPK);
+    }
+
+    @RequestMapping(value = "/user/getbyPK")
+    public ModelAndView user_getbyPK(@RequestParam(value = "id", defaultValue = "null") UserEntityPK id){
+        ModelAndView modelAndView = new ModelAndView("/layout/fragments/user/getbyid");
+        if(id == null){
 
         }else {
-            modelAndView.addObject("user", userRepository.findById(id));
+            Optional<UserEntity> userEntity = userRepository.findById(id);
+            modelAndView.addObject("user", userEntity.get());
+            Optional<UserTypeEntity> userTypeEntity = userTypeRepository.findById(userEntity.get().getUserTypeIdUserType());
+            modelAndView.addObject("userType", userTypeEntity.get().getUserType());
+
+            /*
+            * Get Team List if userType is Aluno
+            * Get Laboratory List if userType is Administrador or Supervisor
+             */
+            if(id.getUserTypeIdUserType() == 3) {
+                List<UserHasTeamEntity> userHasTeamEntities = userhTeamRepository.findAllByUserIdUser(id.getIdUser());
+                List<TeamEntity> teamEntities = new ArrayList<>();
+                for(UserHasTeamEntity  userHasTeamEntity: userHasTeamEntities){
+                    teamEntities.add(teamRepository.findById( userHasTeamEntity.getTeamIdTeam() ).get());
+                }
+                modelAndView.addObject("teams", teamEntities);
+            }else{
+                List<LaboratoryEntity> laboratoryEntities = laboratoryRepository.findAllByUserIdUser(id.getIdUser());
+                modelAndView.addObject("laboratories", laboratoryEntities);
+            }
         }
         return modelAndView;
     }
@@ -66,10 +98,11 @@ public class ratLabAPI {
 
     @RequestMapping("/user/getall")
     public ModelAndView user_getall(){
-        ModelAndView modelAndView = new ModelAndView("hello");
-        modelAndView.addObject("title");
-        modelAndView.addObject("description");
-        modelAndView.addObject("user_list", userRepository.findAll());
+        ModelAndView modelAndView = new ModelAndView("/layout/fragments/user/listall");
+        modelAndView.addObject("title", "Lista de Usuários");
+        modelAndView.addObject("description", "mostra todos os usuários");
+        modelAndView.addObject("users", userRepository.findAll());
+        modelAndView.addObject("types", (List) userTypeRepository.findAll());
 
         return modelAndView;
     }
@@ -104,11 +137,20 @@ public class ratLabAPI {
         user.setPasswordUser(PEC.encode(password));
         user.setUserTypeIdUserType(typeid);
 
-        userRepository.save(user);
+        System.out.println(name+"\t"+email+"\t"+password+"\t"+typeid+"\t");
 
-        ModelAndView modelAndView = new ModelAndView("/hello");
+                userRepository.save(user);
 
-        return modelAndView;
+        UserEntity userEntity = userRepository.findByEmailUser(email);
+
+        System.out.println("ID: "+ userEntity.getIdUser());
+
+
+        UserEntityPK userEntityPK = new UserEntityPK();
+        userEntityPK.setUserTypeIdUserType(typeid);
+        userEntityPK.setIdUser(userEntity.getIdUser());
+
+        return user_getbyPK(userEntityPK);
     }
 
 

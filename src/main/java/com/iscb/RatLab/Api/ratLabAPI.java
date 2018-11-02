@@ -37,7 +37,7 @@ public class ratLabAPI {
     @Autowired
     UserRepository userRepository;
 
-
+// ----------------- USER API -------------------
     @RequestMapping("/")
     public ModelAndView hello(){
         ModelAndView modelAndView = new ModelAndView("/hello");
@@ -137,13 +137,8 @@ public class ratLabAPI {
         user.setPasswordUser(PEC.encode(password));
         user.setUserTypeIdUserType(typeid);
 
-        System.out.println(name+"\t"+email+"\t"+password+"\t"+typeid+"\t");
-
-                userRepository.save(user);
-
+        userRepository.save(user);
         UserEntity userEntity = userRepository.findByEmailUser(email);
-
-        System.out.println("ID: "+ userEntity.getIdUser());
 
 
         UserEntityPK userEntityPK = new UserEntityPK();
@@ -154,5 +149,49 @@ public class ratLabAPI {
     }
 
 
+//----------------------- Laboratory API -------------------
+
+    @RequestMapping(value = "/lab/add", method = RequestMethod.POST)
+    public ModelAndView lab_add(
+        @RequestParam(value = "name") String name,
+        @RequestParam(value = "user") UserEntity user
+    ){
+        LaboratoryEntity laboratoryEntity = new LaboratoryEntity();
+        laboratoryEntity.setNameLaboratory(name);
+        laboratoryEntity.setUserIdUser(user.getIdUser());
+        laboratoryEntity.setUserUserTypeIdUserType1(user.getUserTypeIdUserType());
+
+        laboratoryRepository.save(laboratoryEntity);
+
+
+
+        return lab_getbyid(laboratoryRepository.findByNameLaboratory(name).getIdLaboratory());
+    }
+
+    @RequestMapping(value = "/lab/add", method = RequestMethod.GET)
+    public ModelAndView lab_adding(){
+        ModelAndView modelAndView = new ModelAndView("/layout/fragments/laboratory/add");
+        modelAndView.addObject("title", "Adicionar Laboratório");
+        modelAndView.addObject("description", "Adicione um novo laboratório");
+
+        List<UserEntity> userEntityList = (List) userRepository.findAll();
+        modelAndView.addObject("users", userEntityList);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/lab/getbyid")
+    public ModelAndView lab_getbyid(
+            @RequestParam(value = "id") int id
+    ){
+        ModelAndView modelAndView = new ModelAndView("/layout/fragments/laboratory/getbyid");
+        modelAndView.addObject("title", "Detalhes do Laboratório");
+        modelAndView.addObject("description", "mostra os detalhes do laboratório");
+
+        Optional<LaboratoryEntity> laboratoryEntity = laboratoryRepository.findById(id);
+        modelAndView.addObject("laboratory", laboratoryEntity.get());
+
+        return modelAndView;
+    }
 
 }

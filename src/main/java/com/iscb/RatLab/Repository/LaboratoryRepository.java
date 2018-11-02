@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LaboratoryRepository extends CrudRepository<LaboratoryEntity, Integer> {
     List<LaboratoryEntity> findAllByUserIdUser(int id);
+    LaboratoryEntity findByNameLaboratory(String name);
 }

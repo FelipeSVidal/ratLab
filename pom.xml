@@ -102,9 +102,13 @@
 			<version>${webjars-locator.version}</version>
 		</dependency>
 		<dependency>
-		<groupId>nz.net.ultraq.thymeleaf</groupId>
-		<artifactId>thymeleaf-layout-dialect</artifactId>
-	</dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

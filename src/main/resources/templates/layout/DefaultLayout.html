@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="layout/fragments/Header :: head-load">
 </head>
@@ -203,16 +206,16 @@
                 <li class="active"><a href="/user/add"><i class="fa fa-link"></i> <span>Add user</span></a></li>
              <!--   <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li> -->
                 <li><a href="/user/getall"><i class="fa fa-leaf"><span> Listar </span></i> </a></li>
-                <li class="treeview">
+                <li class="treeview" th:unless="${#authentication.getPrincipal().getUserTypeID() == 3}">
                     <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
-                    </ul>
+                        <ul class="treeview-menu">
+                            <li><a href="/lab/add">Adicionar</a></li>
+                            <li><a href="#">Link in level 2</a></li>
+                        </ul>
                 </li>
             </ul>
             <!-- /.sidebar-menu -->

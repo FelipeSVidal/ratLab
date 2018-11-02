@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+<section layout:fragment="content-central">
+    <div class="box">
+        <div class="box-body">
+
+            <form method="post" action="/lab/add">
+
+                <div class="form-group">
+                    <label for="inputName">Nome: </label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Nome do Usuário" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputTypeUser">Tipo de Usuário: </label>
+                    <select id="inputTypeUser" class="form-control" name="user" required>
+                        <th:block th:each="user : ${users}">
+                            <option value="${user}" th:text="${user.getNameUser()}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary"> Adicionar </button>
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+
+</section>
+
+</html>

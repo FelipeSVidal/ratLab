@@ -1,19 +1,12 @@
 package com.iscb.RatLab.Security;
 
 import com.iscb.RatLab.Entity.UserEntity;
-import com.iscb.RatLab.Entity.UserTypeEntity;
-import com.iscb.RatLab.Repository.UserTypeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 public class MyUserPrincipal implements UserDetails {
-    @Autowired
-    UserTypeRepository userTypeRepository;
 
     UserEntity userEntity;
 
@@ -55,8 +48,9 @@ public class MyUserPrincipal implements UserDetails {
         return true;
     }
 
-    public int getUserTypeID(){
-        return userEntity.getUserTypeIdUserType();
-    }
+    public int getTypeUser(){return userEntity.getTypeUser();}
+
+    public UserEntity getUserEntity(){return userEntity;}
+
 
 }

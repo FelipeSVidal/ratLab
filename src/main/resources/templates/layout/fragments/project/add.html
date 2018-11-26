@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+<section layout:fragment="content-central">
+    <div class="box">
+        <!-- Case called by lab/getbyid -->
+        <th:block th:unless="${laboratory_name == null}">
+            <div class="box-header">
+                <h2>Loboratório: <th:block th:text="${laboratory_name}"></th:block></h2>
+                <input type="hidden" class="form-control" name="laboratory_id" th:value="${laboratory_id}">
+            </div>
+        </th:block>
+        <div class="box-body">
+
+            <form method="post" action="/project/add">
+
+                <!-- Case called by sidebar -->
+                <th:block th:unless="${laboratories == null}">
+                    <div class="form-group">
+                        <label for="inputLaboratory">Laboratório: </label>
+                        <select id="inputLaboratory" class="form-control" name="laboratory_id" required>
+                            <th:block th:each=" laboratory : ${laboratories}">
+                                <option th:value="${laboratory.getIdLaboratory()}" th:text="${laboratory.getNameLaboratory()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </th:block>
+
+                <div class="form-group">
+                    <label for="inputName">Nome do Projeto: </label>
+                    <input type="text" id="inputName" class="form-control" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputNDoc">Número do Documento de Ética: </label>
+                    <input type="text" id="inputNDoc" class="form-control" name="n_doc" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputStatsDoc">Estatus do Documento de Ética: </label>
+                    <select id="inputStatsDoc" class="form-control" name="stats_doc" required>
+                        <option value="Aceito">Aceito</option>
+                        <option value="Analise">Em analise</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputResponsible">Responsável: </label>
+
+                    <select id="inputResponsible" name="user_id" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true" style=" width: 100%">
+                        <th:block th:each="user : ${users}">
+                            <option th:value="${user.getIdUser()}" th:text="${user.getNameUser()}"></option>
+                        </th:block>
+                    </select>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary"> Adicionar </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div layout:fragment="extra-scripts">
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
+
+
+</div>
+
+</html>

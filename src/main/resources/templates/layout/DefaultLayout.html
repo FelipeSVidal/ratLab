@@ -201,22 +201,59 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">HEADER</li>
-                <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="/user/add"><i class="fa fa-link"></i> <span>Add user</span></a></li>
-             <!--   <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li> -->
-                <li><a href="/user/getall"><i class="fa fa-leaf"><span> Listar </span></i> </a></li>
-                <li class="treeview" th:unless="${#authentication.getPrincipal().getUserTypeID() == 3}">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+                <li class="header">Menu</li>
+
+                <li class="treeview" th:if="${#authentication.getPrincipal().getTypeUser() == 1}">
+                    <a href="#"><i class="fa fa-cog"></i> <span> Administrativo </span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
-                        <ul class="treeview-menu">
-                            <li><a href="/lab/add">Adicionar</a></li>
-                            <li><a href="#">Link in level 2</a></li>
-                        </ul>
+                    <ul class="treeview-menu">
+                        <li><a href="/user/add"><i class="fa fa-user-plus"></i> <span>Adicionar usuário</span></a></li>
+                        <li><a href="/lab/add"><i class="fa fa-plus"></i> <span>Adicionar laboratório</span></a></li>
+                        <li><a href="/user/getall"><i class="fa fa-list"><span> Listar todos os usuários</span></i> </a></li>
+                    </ul>
+
                 </li>
+
+                <li class="treeview" th:unless="${#authentication.getPrincipal().getTypeUser() == 3}">
+                    <a href="#"><i class="fa fa-flask"></i> <span> Laboratórios </span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/project/add"><i class="fa fa-plus"></i><span> Adicionar Projeto</span> </a> </li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-folder"></i> <span> Projetos </span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+                        <li><a href="/box/add"><i class="fa fa-plus"></i><span> Adicionar Caixa</span> </a> </li>
+
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#"><i class="fa fa-archive"></i> <span> Caixas </span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+
+
+                    </ul>
+                </li>
+
+                <li><a href="/logout"><i class="fa fa-arrow-left"><span> Sair</span></i> </a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>

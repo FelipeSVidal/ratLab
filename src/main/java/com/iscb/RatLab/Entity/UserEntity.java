@@ -1,53 +1,36 @@
 package com.iscb.RatLab.Entity;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "user", schema = "ratLab")
-@IdClass(UserEntityPK.class)
 public class UserEntity {
-
     private int idUser;
-
-    private String nameUser;
-    private String emailUser;
+    private String loginUser;
     private String passwordUser;
-    private int userTypeIdUserType;
-
+    private int typeUser;
+    private String nameUser;
 
     @Id
-    @Column(name = "id_user")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
     public int getIdUser() {
         return idUser;
     }
-
-
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
     @Basic
-    @Column(name = "name_user")
-    public String getNameUser() {
-        return nameUser;
+    @Column(name = "login_user")
+    public String getLoginUser() {
+        return loginUser;
     }
 
-    public void setNameUser(String nameUser) {
-        this.nameUser = nameUser;
-    }
-
-    @Basic
-    @Column(name = "email_user")
-    public String getEmailUser() {
-        return emailUser;
-    }
-
-    public void setEmailUser(String emailUser) {
-        this.emailUser = emailUser;
+    public void setLoginUser(String loginUser) {
+        this.loginUser = loginUser;
     }
 
     @Basic
@@ -60,14 +43,24 @@ public class UserEntity {
         this.passwordUser = passwordUser;
     }
 
-    @Id
-    @Column(name = "user_type_id_user_type")
-    public int getUserTypeIdUserType() {
-        return userTypeIdUserType;
+    @Basic
+    @Column(name = "type_user")
+    public int getTypeUser() {
+        return typeUser;
     }
 
-    public void setUserTypeIdUserType(int userTypeIdUserType) {
-        this.userTypeIdUserType = userTypeIdUserType;
+    public void setTypeUser(int typeUser) {
+        this.typeUser = typeUser;
+    }
+
+    @Basic
+    @Column(name = "name_user")
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 
     @Override
@@ -76,15 +69,15 @@ public class UserEntity {
         if (o == null || getClass() != o.getClass()) return false;
         UserEntity that = (UserEntity) o;
         return idUser == that.idUser &&
-                userTypeIdUserType == that.userTypeIdUserType &&
-                Objects.equals(nameUser, that.nameUser) &&
-                Objects.equals(emailUser, that.emailUser) &&
-                Objects.equals(passwordUser, that.passwordUser);
+                typeUser == that.typeUser &&
+                Objects.equals(loginUser, that.loginUser) &&
+                Objects.equals(passwordUser, that.passwordUser) &&
+                Objects.equals(nameUser, that.nameUser);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idUser, nameUser, emailUser, passwordUser, userTypeIdUserType);
+        return Objects.hash(idUser, loginUser, passwordUser, typeUser, nameUser);
     }
 }

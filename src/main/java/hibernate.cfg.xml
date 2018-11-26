@@ -9,11 +9,6 @@
         <mapping class="com.iscb.RatLab.Entity.BoxEntity"/>
         <mapping class="com.iscb.RatLab.Entity.LaboratoryEntity"/>
         <mapping class="com.iscb.RatLab.Entity.ProjectEntity"/>
-        <mapping class="com.iscb.RatLab.Entity.RatEntity"/>
-        <mapping class="com.iscb.RatLab.Entity.TeamEntity"/>
         <mapping class="com.iscb.RatLab.Entity.UserEntity"/>
-        <mapping class="com.iscb.RatLab.Entity.UserHasTeamEntity"/>
-        <mapping class="com.iscb.RatLab.Entity.UserTypeEntity"/>
-        <mapping class="com.iscb.RatLab.Entity.UserTypeEntity"/>
     </session-factory>
 </hibernate-configuration>

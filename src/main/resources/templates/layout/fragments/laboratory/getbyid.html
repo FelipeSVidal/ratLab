@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+
+<section layout:fragment="content-central">
+    <!-- Page Content -->
+
+    <div class="box">
+        <div class="box-header">
+            <div class="inline">
+                <h2>
+                    <th:block th:text="${laboratory.getNameLaboratory()}"></th:block>
+                </h2>
+                <hr>
+            </div>
+        </div>
+        <div class="box-body">
+
+            <table id="tabela" class="table table-hover table-bordered " role="grid">
+                <thead>
+                    <tr role="row">
+                        <th>Projeto</th>
+                        <th>Número Doc</th>
+                        <th>Detalhes</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <th:block th:each="project : ${projects}">
+                    <tr role="row">
+                        <td th:text="${project.getNameProject()}"></td>
+                        <td th:text="${project.getnDocEthicProject()}"></td>
+                        <td>
+                            <button class="fa fa-search"
+                                    th:onclick="|project_getbyid('${laboratory.getIdLaboratory()}','${project.getIdProject()}')|">
+                            </button>
+                        </td>
+                    </tr>
+                </th:block>
+                <th:block th:each="laboratory : ${laboratories}">
+                    <tr role="row">
+                        <td class="bg-aqua"><h3 th:text="${laboratory.getNameLaboratory()}"></h3></td>
+                    </tr>
+                </th:block>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+<div layout:fragment="extra-scripts">
+    <script>
+        $(document).ready(function() {
+            $('#tabela').DataTable();
+        });
+        function project_getbyid(laboratory_id, project_id ) {
+            $.redirect("/project/getbyid",{project_id: project_id, laboratory_id: laboratory_id});
+        }
+    </script>
+</div>
+
+</html>

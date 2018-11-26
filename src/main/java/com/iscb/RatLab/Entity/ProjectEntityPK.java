@@ -8,7 +8,6 @@ import java.util.Objects;
 public class ProjectEntityPK implements Serializable {
     private int idProject;
     private int laboratoryIdLaboratory;
-    private int teamIdTeam;
 
     @Column(name = "id_project")
     @Id
@@ -30,29 +29,18 @@ public class ProjectEntityPK implements Serializable {
         this.laboratoryIdLaboratory = laboratoryIdLaboratory;
     }
 
-    @Column(name = "team_id_team")
-    @Id
-    public int getTeamIdTeam() {
-        return teamIdTeam;
-    }
-
-    public void setTeamIdTeam(int teamIdTeam) {
-        this.teamIdTeam = teamIdTeam;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjectEntityPK that = (ProjectEntityPK) o;
         return idProject == that.idProject &&
-                laboratoryIdLaboratory == that.laboratoryIdLaboratory &&
-                teamIdTeam == that.teamIdTeam;
+                laboratoryIdLaboratory == that.laboratoryIdLaboratory;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idProject, laboratoryIdLaboratory, teamIdTeam);
+        return Objects.hash(idProject, laboratoryIdLaboratory);
     }
 }

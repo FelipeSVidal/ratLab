@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+
+<section layout:fragment="content-central">
+    <!-- Page Content -->
+
+    <div class="box">
+        <div class="box-header">
+            <div class="inline">
+                <h1>
+                    <th:block th:text="${project.getNameProject()}"></th:block>
+                </h1>
+            </div>
+        </div>
+        <div class="box-body">
+            <h4 th:text="${'Documento de ética: '+ project.getnDocEthicProject()}"></h4>
+                    <h3>
+                        <span>Responsável: </span>
+                        <th:block th:text="${responsible.getNameUser()}"></th:block>
+                    </h3>
+                    <h3>
+                        <span>Laboratório:</span>
+                        <th:block th:text="${laboratory.getNameLaboratory()}"></th:block>
+                    </h3>
+
+            <hr>
+            <table id="tabela" class="table table-hover table-bordered " role="grid">
+                <thead>
+                    <tr role="row">
+                        <th>Caixa/Biotec</th>
+                        <th>Detalhes</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <th:block th:each="box : ${boxs}">
+                    <tr role="row">
+                        <td th:text="${box.getBiotecBox()}"></td>
+                        <td>
+                            <button class="fa fa-search"
+                                    th:onclick="|box_getbyid('${box.getIdBox()}','${project.getIdProject()}')|">
+                            </button>
+                        </td>
+                    </tr>
+                    </tr>
+                </th:block>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+<div layout:fragment="extra-scripts">
+    <script>
+        $(document).ready(function() {
+            $('#tabela').DataTable({
+                "columnDefs": [
+                    { "width": "5%", "targets": 1 }
+                ]
+            });
+        });
+        function box_getbyid(box_id, project_id ) {
+            $.redirect("/box/getbyid",{id: box_id, project_id: project_id});
+        }
+    </script>
+</div>
+
+</html>

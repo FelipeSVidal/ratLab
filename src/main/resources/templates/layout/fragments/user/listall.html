@@ -16,7 +16,7 @@
                     <tr role="row">
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Email</th>
+                        <th>Login</th>
                         <th>Tipo</th>
                         <th>Detalhes</th>
                     </tr>
@@ -27,11 +27,11 @@
                             <!--/*@thymesVar id="user" type="com.iscb.RatLab.Entity.UserEntity"*/-->
                             <td th:text="${user.getIdUser()}"></td>
                             <td th:text="${user.getNameUser()}"></td>
-                            <td th:text="${user.getEmailUser()}"></td>
-                            <td th:text="${types.get(user.getUserTypeIdUserType() - 1).getUserType()}"></td>
+                            <td th:text="${user.getLoginUser()}"></td>
+                            <td th:text="${user.getTypeUser()}"></td>
                             <td>
                                 <button class="fa fa-search"
-                                        th:onclick="|getbyid('${user.getIdUser()}', '${types.get(user.getUserTypeIdUserType() - 1).getIdUserType()}')|">
+                                        th:onclick="|getbyid('${user.getIdUser()}')|">
                                 </button>
                             </td>
                         </tr>
@@ -59,8 +59,8 @@
         $(document).ready(function() {
             $('#tabela').DataTable();
         } );
-        function getbyid(id, type) {
-            $.redirect("/user/getbyid",{id: id, type: type});
+        function getbyid(id) {
+            $.redirect("/user/getbyid",{id: id});
         }
     </script>
 </div>

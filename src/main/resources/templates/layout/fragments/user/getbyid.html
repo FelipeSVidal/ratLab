@@ -8,12 +8,12 @@
 <section layout:fragment="content-central">
     <!-- Page Content -->
 
-    <div class="box">
+    <div class="box info-box">
         <div class="box-header">
             <div class="inline">
                 <h1>
-                    <th:block th:text="${user.getNameUser()} +' -   '+ ${userType}"></th:block>
-                    <h3 th:text="${user.getEmailUser()}"></h3>
+                    <th:block th:text="${user.getNameUser()} +' -   '+ ${type}"></th:block>
+                    <h3 th:text="${user.getLoginUser()}"></h3>
                 </h1>
                 <hr>
             </div>
@@ -23,21 +23,34 @@
             <table id="tabela" class="table table-hover table-bordered " role="grid">
                 <thead>
                     <tr role="row">
-                        <th>Nome</th>
+                        <th class="col-11">
+                            <th:block th:unless="${projects == null}">Projetos</th:block>
+                            <th:block th:unless="${laboratories == null}">Laboratórios</th:block>
+                        </th>
+                        <th>Detalhes</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                <th:block th:each="team : ${teams}">
+                <th:block th:each="project : ${projects}">
                     <tr role="row">
-                        <td class="bg-aqua" th:text="${team.getIdTeam()}"></td>
+                        <td class="text-bold" th:text="${project.getNameProject()}"></td>
+                        <td>
+                            <button class="fa fa-search"
+                                    th:onclick="|proj_getbyid('${project.getIdProject()}', '${project.getLaboratoryIdLaboratory()}')|">
+                            </button>
+                        </td>
                     </tr>
                 </th:block>
                 <th:block th:each="laboratory : ${laboratories}">
                     <tr role="row">
-                        <td class="bg-aqua"><h3 th:text="${laboratory.getNameLaboratory()}"></h3></td>
+                        <td th:text="${laboratory.getNameLaboratory()}"></td>
+                        <td>
+                            <button class="fa fa-search"
+                                    th:onclick="|lab_getbyid('${laboratory.getIdLaboratory()}')|">
+                            </button>
+                        </td>
                     </tr>
-
                 </th:block>
 
                 </tbody>
@@ -49,8 +62,18 @@
 <div layout:fragment="extra-scripts">
     <script>
         $(document).ready(function() {
-            $('#tabela').DataTable();
+            $('#tabela').DataTable( {
+                "columnDefs": [
+                    { "width": "5%", "targets": 1 }
+                ]
+            });
         });
+        function proj_getbyid(id, lab) {
+            $.redirect("/project/getbyid",{project_id: id, laboratory_id: lab});
+        }
+        function lab_getbyid(laboratory_id) {
+            $.redirect("/lab/getbyid",{id: laboratory_id});
+        }
     </script>
 </div>
 

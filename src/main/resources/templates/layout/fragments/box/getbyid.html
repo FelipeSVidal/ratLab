@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+
+<section layout:fragment="content-central">
+    <!-- Page Content -->
+
+    <div class="box">
+        <div class="box-header">
+            <div class="inline">
+                <h1>
+                    <th:block
+                            th:onclick="|project_getbyid('${project.getLaboratoryIdLaboratory()}', '${project.getIdProject()}')|"
+                            th:text="${project.getNameProject()}"></th:block> - <th:block th:text="${box.getBiotecBox()}"></th:block>
+                </h1>
+                <hr>
+            </div>
+        </div>
+        <div class="box-body">
+
+            <table id="tabela" class="table table-hover table-bordered " role="grid">
+                <thead>
+                    <tr role="row">
+                        <th>Tipo</th>
+                        <th>Especie</th>
+                        <th>Machos</th>
+                        <th>Femeas</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td th:text="${box.getTypeBox()}"></td>
+                        <td th:text="${box.getSpecieBox()}"></td>
+                        <td th:text="${box.getQtdMaleBox()}"></td>
+                        <td th:text="${box.getQtdFemaleBox()}"></td>
+                        <td th:text="${sum}"></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+<div layout:fragment="extra-scripts">
+    <script>
+        $(document).ready(function() {
+            $('#tabela').DataTable();
+        });
+
+        function project_getbyid(laboratory_id, project_id ) {
+            $.redirect("/project/getbyid",{project_id: project_id, laboratory_id: laboratory_id});
+        }
+    </script>
+</div>
+
+</html>

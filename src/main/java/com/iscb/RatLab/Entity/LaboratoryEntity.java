@@ -8,8 +8,8 @@ import java.util.Objects;
 public class LaboratoryEntity {
     private int idLaboratory;
     private String nameLaboratory;
+    private String initialsLaboratory;
     private int userIdUser;
-    private int userUserTypeIdUserType1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class LaboratoryEntity {
     }
 
     @Basic
-    @Column(name = "name_Laboratory")
+    @Column(name = "name_laboratory")
     public String getNameLaboratory() {
         return nameLaboratory;
     }
@@ -32,19 +32,30 @@ public class LaboratoryEntity {
         this.nameLaboratory = nameLaboratory;
     }
 
+    @Basic
+    @Column(name = "initials_laboratory")
+    public String getInitialsLaboratory() {
+        return initialsLaboratory;
+    }
+
+    public void setInitialsLaboratory(String initialsLaboratory) {
+        this.initialsLaboratory = initialsLaboratory;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LaboratoryEntity that = (LaboratoryEntity) o;
         return idLaboratory == that.idLaboratory &&
-                Objects.equals(nameLaboratory, that.nameLaboratory);
+                Objects.equals(nameLaboratory, that.nameLaboratory) &&
+                Objects.equals(initialsLaboratory, that.initialsLaboratory);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idLaboratory, nameLaboratory);
+        return Objects.hash(idLaboratory, nameLaboratory, initialsLaboratory);
     }
 
     @Basic
@@ -55,15 +66,5 @@ public class LaboratoryEntity {
 
     public void setUserIdUser(int userIdUser) {
         this.userIdUser = userIdUser;
-    }
-
-    @Basic
-    @Column(name = "user_user_type_id_user_type1")
-    public int getUserUserTypeIdUserType1() {
-        return userUserTypeIdUserType1;
-    }
-
-    public void setUserUserTypeIdUserType1(int userUserTypeIdUserType1) {
-        this.userUserTypeIdUserType1 = userUserTypeIdUserType1;
     }
 }

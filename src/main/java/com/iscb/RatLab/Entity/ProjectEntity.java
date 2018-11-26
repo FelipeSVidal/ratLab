@@ -9,8 +9,10 @@ import java.util.Objects;
 public class ProjectEntity {
     private int idProject;
     private String nameProject;
+    private String nDocEthicProject;
+    private String statusDocProject;
     private int laboratoryIdLaboratory;
-    private int teamIdTeam;
+    private int userIdUser;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +35,26 @@ public class ProjectEntity {
         this.nameProject = nameProject;
     }
 
+    @Basic
+    @Column(name = "n_doc_ethic_project")
+    public String getnDocEthicProject() {
+        return nDocEthicProject;
+    }
+
+    public void setnDocEthicProject(String nDocEthicProject) {
+        this.nDocEthicProject = nDocEthicProject;
+    }
+
+    @Basic
+    @Column(name = "status_doc_project")
+    public String getStatusDocProject() {
+        return statusDocProject;
+    }
+
+    public void setStatusDocProject(String statusDocProject) {
+        this.statusDocProject = statusDocProject;
+    }
+
     @Id
     @Column(name = "laboratory_id_laboratory")
     public int getLaboratoryIdLaboratory() {
@@ -43,16 +65,6 @@ public class ProjectEntity {
         this.laboratoryIdLaboratory = laboratoryIdLaboratory;
     }
 
-    @Id
-    @Column(name = "team_id_team")
-    public int getTeamIdTeam() {
-        return teamIdTeam;
-    }
-
-    public void setTeamIdTeam(int teamIdTeam) {
-        this.teamIdTeam = teamIdTeam;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,13 +72,24 @@ public class ProjectEntity {
         ProjectEntity that = (ProjectEntity) o;
         return idProject == that.idProject &&
                 laboratoryIdLaboratory == that.laboratoryIdLaboratory &&
-                teamIdTeam == that.teamIdTeam &&
-                Objects.equals(nameProject, that.nameProject);
+                Objects.equals(nameProject, that.nameProject) &&
+                Objects.equals(nDocEthicProject, that.nDocEthicProject) &&
+                Objects.equals(statusDocProject, that.statusDocProject);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idProject, nameProject, laboratoryIdLaboratory, teamIdTeam);
+        return Objects.hash(idProject, nameProject, nDocEthicProject, statusDocProject, laboratoryIdLaboratory);
+    }
+
+    @Basic
+    @Column(name = "user_id_user")
+    public int getUserIdUser() {
+        return userIdUser;
+    }
+
+    public void setUserIdUser(int userIdUser) {
+        this.userIdUser = userIdUser;
     }
 }

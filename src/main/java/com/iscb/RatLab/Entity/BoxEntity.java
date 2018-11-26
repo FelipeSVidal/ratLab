@@ -1,20 +1,20 @@
 package com.iscb.RatLab.Entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "box", schema = "ratLab")
 @IdClass(BoxEntityPK.class)
 public class BoxEntity {
+
     private int idBox;
-    private int nRatsBox;
-    private Date createdBox;
-    private Date lastModifiBox;
+    private Integer qtdMaleBox;
+    private Integer qtdFemaleBox;
+    private String typeBox;
+    private String specieBox;
+    private String biotecBox;
     private int projectIdProject;
-    private int projectLaboratoryIdLaboratory;
-    private int projectTeamIdTeam;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,33 +28,53 @@ public class BoxEntity {
     }
 
     @Basic
-    @Column(name = "n_rats_box")
-    public int getnRatsBox() {
-        return nRatsBox;
+    @Column(name = "qtd_male_box")
+    public Integer getQtdMaleBox() {
+        return qtdMaleBox;
     }
 
-    public void setnRatsBox(int nRatsBox) {
-        this.nRatsBox = nRatsBox;
-    }
-
-    @Basic
-    @Column(name = "created_box")
-    public Date getCreatedBox() {
-        return createdBox;
-    }
-
-    public void setCreatedBox(Date createdBox) {
-        this.createdBox = createdBox;
+    public void setQtdMaleBox(Integer qtdMaleBox) {
+        this.qtdMaleBox = qtdMaleBox;
     }
 
     @Basic
-    @Column(name = "last_modifi_box")
-    public Date getLastModifiBox() {
-        return lastModifiBox;
+    @Column(name = "qtd_female_box")
+    public Integer getQtdFemaleBox() {
+        return qtdFemaleBox;
     }
 
-    public void setLastModifiBox(Date lastModifiBox) {
-        this.lastModifiBox = lastModifiBox;
+    public void setQtdFemaleBox(Integer qtdFemaleBox) {
+        this.qtdFemaleBox = qtdFemaleBox;
+    }
+
+    @Basic
+    @Column(name = "type_box")
+    public String getTypeBox() {
+        return typeBox;
+    }
+
+    public void setTypeBox(String typeBox) {
+        this.typeBox = typeBox;
+    }
+
+    @Basic
+    @Column(name = "specie_box")
+    public String getSpecieBox() {
+        return specieBox;
+    }
+
+    public void setSpecieBox(String specieBox) {
+        this.specieBox = specieBox;
+    }
+
+    @Basic
+    @Column(name = "biotec_box")
+    public String getBiotecBox() {
+        return biotecBox;
+    }
+
+    public void setBiotecBox(String biotecBox) {
+        this.biotecBox = biotecBox;
     }
 
     @Id
@@ -67,43 +87,23 @@ public class BoxEntity {
         this.projectIdProject = projectIdProject;
     }
 
-    @Id
-    @Column(name = "project_laboratory_id_laboratory")
-    public int getProjectLaboratoryIdLaboratory() {
-        return projectLaboratoryIdLaboratory;
-    }
-
-    public void setProjectLaboratoryIdLaboratory(int projectLaboratoryIdLaboratory) {
-        this.projectLaboratoryIdLaboratory = projectLaboratoryIdLaboratory;
-    }
-
-    @Id
-    @Column(name = "project_team_id_team")
-    public int getProjectTeamIdTeam() {
-        return projectTeamIdTeam;
-    }
-
-    public void setProjectTeamIdTeam(int projectTeamIdTeam) {
-        this.projectTeamIdTeam = projectTeamIdTeam;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BoxEntity boxEntity = (BoxEntity) o;
         return idBox == boxEntity.idBox &&
-                nRatsBox == boxEntity.nRatsBox &&
                 projectIdProject == boxEntity.projectIdProject &&
-                projectLaboratoryIdLaboratory == boxEntity.projectLaboratoryIdLaboratory &&
-                projectTeamIdTeam == boxEntity.projectTeamIdTeam &&
-                Objects.equals(createdBox, boxEntity.createdBox) &&
-                Objects.equals(lastModifiBox, boxEntity.lastModifiBox);
+                Objects.equals(qtdMaleBox, boxEntity.qtdMaleBox) &&
+                Objects.equals(qtdFemaleBox, boxEntity.qtdFemaleBox) &&
+                Objects.equals(typeBox, boxEntity.typeBox) &&
+                Objects.equals(specieBox, boxEntity.specieBox) &&
+                Objects.equals(biotecBox, boxEntity.biotecBox);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idBox, nRatsBox, createdBox, lastModifiBox, projectIdProject, projectLaboratoryIdLaboratory, projectTeamIdTeam);
+        return Objects.hash(idBox, qtdMaleBox, qtdFemaleBox, typeBox, specieBox, biotecBox, projectIdProject);
     }
 }

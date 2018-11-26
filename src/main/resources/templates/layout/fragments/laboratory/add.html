@@ -12,27 +12,27 @@
 
                 <div class="form-group">
                     <label for="inputName">Nome: </label>
-                    <input type="text" class="form-control" id="inputName" placeholder="Nome do Usuário" name="name" required>
+                    <input type="text" class="form-control" id="inputName" placeholder="Nome do Laboratório" name="name" required>
                 </div>
+
                 <div class="form-group">
-                    <label for="inputTypeUser">Tipo de Usuário: </label>
+                    <label for="inputInitials">Sigla: </label>
+                    <input type="text" class="form-control" id="inputInitials" placeholder="Nome do Usuário" name="initials" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputTypeUser">Chefe do Laboratório: </label>
                     <select id="inputTypeUser" class="form-control" name="user" required>
                         <th:block th:each="user : ${users}">
-                            <option value="${user}" th:text="${user.getNameUser()}"></option>
+                            <option th:value="${user.getIdUser()}" th:text="${user.getNameUser()}"></option>
                         </th:block>
                     </select>
                 </div>
+
                 <button type="submit" class="btn btn-primary"> Adicionar </button>
             </form>
-
-
         </div>
-
-
     </div>
-
-
-
 </section>
 
 </html>

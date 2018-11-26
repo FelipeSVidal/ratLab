@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+<section layout:fragment="content-central">
+    <div class="box">
+        <!-- Case called by laboratory/getbyid -->
+        <th:block th:unless="${project_name == null}">
+            <div class="box-header">
+                <h2>Projeto: <th:block th:text="${project_name}"></th:block></h2>
+                <input type="hidden" class="form-control" name="project_id" th:value="${project_id}">
+            </div>
+        </th:block>
+        <div class="box-body">
+
+            <form method="post" action="/box/add">
+
+            <!-- Case called by sidebar -->
+                <th:block th:unless="${projects == null}">
+                    <div class="form-group">
+                        <label for="inputProject">Projeto: </label>
+                        <select id="inputProject" class="form-control" name="projectId" required>
+                            <th:block th:each="project : ${projects}">
+                                <option th:value="${project.getIdProject()}" th:text="${project.getNameProject()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                </th:block>
+
+                <div class="form-group">
+                    <label for="inputType">Tipo de Animal: </label>
+                    <input type="text" id="inputType" class="form-control" name="typeBox" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputSpecie">Espécie do animal: </label>
+                    <input type="text" id="inputSpecie" class="form-control" name="specieBox" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputQtdMales">Quantidade de Machos: </label>
+                    <input type="number" id="inputQtdMales" class="form-control" name="qtdMaleBox" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputQtdFemales">Quantidade de Fêmeas: </label>
+                    <input type="number" id="inputQtdFemales" class="form-control" name="qtdFemaleBox" required>
+                </div>
+                <div class="form-group">
+                    <label for="inputBiotec">Biotec: </label>
+                    <input type="text" id="inputBiotec" class="form-control" name="biotecBox" required>
+                </div>
+                <button type="submit" class="btn btn-primary"> Adicionar </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+</html>

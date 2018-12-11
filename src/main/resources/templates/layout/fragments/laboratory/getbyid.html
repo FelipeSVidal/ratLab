@@ -9,16 +9,20 @@
     <!-- Page Content -->
 
     <div class="box">
-        <div class="box-header">
+        <div class="box-header with-border">
             <div class="inline">
                 <h2>
-                    <th:block th:text="${laboratory.getNameLaboratory()}"></th:block>
+                    <th:block th:text="${laboratory.getNameLaboratory()+'   -   '+laboratory.getInitialsLaboratory()}"></th:block>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#modal-edit"><i class="fa fa-edit"></i> </button>
+                </div>
                 </h2>
-                <hr>
             </div>
         </div>
         <div class="box-body">
-
+            <h3>
+                <span th:text="${'Supervisor: '+ user.getNameUser()}"></span>
+            </h3>
             <table id="tabela" class="table table-hover table-bordered " role="grid">
                 <thead>
                     <tr role="row">
@@ -51,6 +55,39 @@
         </div>
     </div>
 
+    <div class="modal fade modal-info " id="modal-edit">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Editar Laboratório</h4>
+                </div>
+                <div class="modal-body col-lg-12">
+                    <label for="lab-name">Nome do Laboratório: </label>
+                    <input type="text" id="lab-name" class="text-black form-control" required th:value="${laboratory.getNameLaboratory()}">
+                    <label for="lab-initials">Iniciais do Laboratório: </label>
+                    <input type="text" id="lab-initials" class="text-black form-control" required th:value="${laboratory.getInitialsLaboratory()}">
+                    <label for="lab-supervisor">Supervisor do Laboratório: </label>
+                    <select id="lab-supervisor" class="form-control">
+                        <th:block th:each="us : ${users}">
+                            <option th:value="${us.getIdUser()}"
+                                    th:text="${us.getNameUser()}"
+                                    th:selected="${us.getIdUser() == user.getIdUser()}">
+                            </option>
+                        </th:block>
+                    </select>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-outline" id="add-att">Atualizar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 </section>
 <div layout:fragment="extra-scripts">
     <script>
@@ -59,6 +96,20 @@
         });
         function project_getbyid(laboratory_id, project_id ) {
             $.redirect("/project/getbyid",{project_id: project_id, laboratory_id: laboratory_id});
+        }
+
+        $('#modal-edit').on('show.bs.modal', function (event) {
+            var modal = $(this);
+            modal.find('.modal-footer #add-att').on("click", function () {
+                var name = modal.find('.modal-body #lab-name').val();
+                var initials = modal.find('.modal-body #lab-initials').val();
+                var user = modal.find('.modal-body #lab-supervisor').val();
+                new_att(name,initials,user);
+            });
+        });
+        function new_att(name,initials,user) {
+            $.post("/lab/update",{id:[[${laboratory.getIdLaboratory()}]] , name:name, initials:initials, user:user});
+            location.reload();
         }
     </script>
 </div>

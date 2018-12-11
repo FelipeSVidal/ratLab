@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="inputTypeUser">Chefe do Laboratório: </label>
+                    <label for="inputTypeUser">Supervisor do Laboratório: </label>
                     <select id="inputTypeUser" class="form-control" name="user" required>
                         <th:block th:each="user : ${users}">
                             <option th:value="${user.getIdUser()}" th:text="${user.getNameUser()}"></option>

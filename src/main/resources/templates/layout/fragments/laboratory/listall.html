@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+
+<section layout:fragment="content-central">
+    <div class="box">
+        <div class="box-body">
+
+            <div class="form-inline">
+                <div class="col-sm-12">
+                    <table id="tabela" class="table table-hover table-bordered " role="grid">
+                        <thead>
+                        <tr role="row">
+                            <th>Nome</th>
+                            <th>Iniciais</th>
+                            <th>Supervisor</th>
+                            <th>Detalhes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each=" laboratory,index : ${list}">
+                            <tr role="row">
+                                <!--/*@thymesVar id="user" type="com.iscb.RatLab.Entity.UserEntity"*/-->
+                                <td th:text="${laboratory.getNameLaboratory()}"></td>
+                                <td th:text="${laboratory.getInitialsLaboratory()}"></td>
+                                <td th:text="${users.get(index.index).getNameUser()}"></td>
+                                <td>
+                                    <button class="fa fa-search"
+                                            th:onclick="|getbyid('${laboratory.getIdLaboratory()}')|">
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </th:block>
+
+
+                        </tbody>
+
+
+
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<div layout:fragment="extra-scripts">
+    <script>
+        $(document).ready(function() {
+            $('#tabela').DataTable();
+        } );
+        function getbyid(id) {
+            $.redirect("/lab/getbyid",{ id: id});
+        }
+    </script>
+</div>
+
+</html>

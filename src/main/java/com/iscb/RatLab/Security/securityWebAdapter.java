@@ -43,15 +43,15 @@ public class securityWebAdapter  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/").permitAll()
+                .antMatchers("/css/**","/register","/user/add", "/js/**", "/fonts/**","/webjars/**").permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().permitAll()
+                .and().formLogin().loginPage("/login").permitAll()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/static/style/**", "/templates/**");
+        web.ignoring().antMatchers("/static/**", "/templates/**");
     }
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+    <head th:replace="layout/fragments/Header :: head-load">
+    </head>
+
+    <body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Faça login para acessar o sistema</p>
+
+            <form name="f" th:action="@{/login}" method="post">
+                <fieldset>
+                    <div th:if="${param.error}" class="alert alert-error">
+                        Login e senha incorretos.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success">
+                        Você foi deslogado com sucesso.
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Usuário">
+                        <span class="fa fa-envelope form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Senha">
+                        <span class="fa fa-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+
+            <a href="/register" class="text-center">Registrar um novo usuário</a>
+
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+
+
+    <div th:replace="layout/fragments/Footer :: footer-load"></div>
+
+    </body>
+</html>

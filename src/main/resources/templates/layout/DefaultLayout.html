@@ -210,9 +210,10 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="/user/add"><i class="fa fa-user-plus"></i> <span>Adicionar usuário</span></a></li>
+                      <!--  <li><a href="/user/add"><i class="fa fa-user-plus"></i> <span>Adicionar usuário</span></a></li> -->
                         <li><a href="/lab/add"><i class="fa fa-plus"></i> <span>Adicionar laboratório</span></a></li>
-                        <li><a href="/user/getall"><i class="fa fa-list"><span> Listar todos os usuários</span></i> </a></li>
+                        <li><a href="#"><i class="fa fa-pie-chart"></i><span>Relatórios</span></a></li>
+                      <!--  <li><a href="/user/getall"><i class="fa fa-list"><span> Listar todos os usuários</span></i> </a></li> -->
                     </ul>
 
                 </li>
@@ -224,7 +225,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="/project/add"><i class="fa fa-plus"></i><span> Adicionar Projeto</span> </a> </li>
+                        <li><a href="/lab/listall"><i class="fa fa-plus"></i><span>Listar Laboratórios</span> </a> </li>
                     </ul>
                 </li>
 
@@ -236,11 +237,12 @@
                     </a>
                     <ul class="treeview-menu">
 
-                        <li><a href="/box/add"><i class="fa fa-plus"></i><span> Adicionar Caixa</span> </a> </li>
+                        <li><a href="/project/add"><i class="fa fa-plus"></i><span> Adicionar Projeto</span> </a> </li>
+                        <li><a href="/project/listall"><i class="fa fa-list"></i><span> Listar Projetos</span> </a></li>
 
                     </ul>
                 </li>
-
+<!--
                 <li class="treeview">
                     <a href="#"><i class="fa fa-archive"></i> <span> Caixas </span>
                         <span class="pull-right-container">
@@ -251,9 +253,9 @@
 
 
                     </ul>
-                </li>
+                </li -->
 
-                <li><a href="/logout"><i class="fa fa-arrow-left"><span> Sair</span></i> </a></li>
+                <li><a href="/login?logout"><i class="fa fa-arrow-left"><span> Sair</span></i> </a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>

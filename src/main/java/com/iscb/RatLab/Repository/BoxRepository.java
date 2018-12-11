@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface BoxRepository extends CrudRepository<BoxEntity, BoxEntityPK> {
     List<BoxEntity> findAllByProjectIdProject(int project_id);
+    List<BoxEntity> findAllByTypeBoxAndProjectIdProject(String s, int id);
 }

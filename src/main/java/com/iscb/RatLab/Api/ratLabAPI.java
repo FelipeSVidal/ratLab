@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,15 +31,31 @@ public class ratLabAPI {
     ProjectRepository projectRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ModifierRepository modifierRepository;
 
-// ----------------- USER API -------------------
+    // --------------- SYSTEM --------------------
+    @RequestMapping("/login")
+    public ModelAndView login(){
+        ModelAndView modelAndView = new ModelAndView("/login");
+        return modelAndView;
+    }
+    @RequestMapping("/register")
+    public ModelAndView register(){
+        ModelAndView modelAndView = new ModelAndView("/register");
+        return modelAndView;
+    }
     @RequestMapping("/")
     public ModelAndView hello(){
-        ModelAndView modelAndView = new ModelAndView("/hello");
+        ModelAndView modelAndView = new ModelAndView("/home");
         modelAndView.addObject("title", "Página inicial");
         modelAndView.addObject("description", "Página inicial do sistema");
         return modelAndView;
     }
+
+
+// ----------------- USER API -------------------
+
 
     @RequestMapping(value = "/username", method = RequestMethod.GET)
     @ResponseBody
@@ -60,13 +79,13 @@ public class ratLabAPI {
 
             String type = "";
             if(user.getTypeUser() == 3){
-                type = "Aluno";
+                type = "Reponsavel";
                 modelAndView.addObject("projects", projectRepository.findAllByUserIdUser(user.getIdUser()));
             }else if(user.getTypeUser() == 2){
                 type = "Supervisor";
                 modelAndView.addObject("laboratories", laboratoryRepository.findAllByUserIdUser(user.getIdUser()));
             }else{
-                type = "Admistrador";
+                type = "Administrador";
             }
             modelAndView.addObject("type", type);
 
@@ -104,11 +123,12 @@ public class ratLabAPI {
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public ModelAndView user_add(
+    public void user_add(
             @RequestParam(value = "name", defaultValue = "") String name,
-            @RequestParam(value = "email", defaultValue = "") String login,
+            @RequestParam(value = "login", defaultValue = "") String login,
             @RequestParam(value = "password", defaultValue = "") String password,
-            @RequestParam(value = "typeid", defaultValue = "") int typeid
+            @RequestParam(value = "typeid", defaultValue = "") int typeid,
+            HttpServletResponse response
     ){
         UserEntity user = new UserEntity();
         user.setNameUser(name);
@@ -121,8 +141,11 @@ public class ratLabAPI {
 
         UserEntity userEntity = userRepository.findByLoginUser(login);
 
-
-        return user_getbyId(userEntity.getIdUser());
+        try {
+            response.sendRedirect("/login");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -174,14 +197,20 @@ public class ratLabAPI {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/lab/getall")
-    public ModelAndView lab_getall(){
+    @RequestMapping(value = "/lab/listall")
+    public ModelAndView lab_getall(Authentication authentication){
         ModelAndView modelAndView = new ModelAndView("/layout/fragments/laboratory/getall");
         modelAndView.addObject("title", "Detalhes do Laboratório");
         modelAndView.addObject("description", "mostra os detalhes do laboratório");
 
-        List<LaboratoryEntity> laboratoryEntities = (List) laboratoryRepository.findAll();
-        modelAndView.addObject("list", laboratoryEntities);
+        UserEntity userEntity = getUserLogger(authentication);
+        if(userEntity.getTypeUser() == 1) {
+            List<LaboratoryEntity> laboratoryEntities = (List) laboratoryRepository.findAll();
+            modelAndView.addObject("list", laboratoryEntities);
+        }else{
+            List<LaboratoryEntity> laboratoryEntities = (List) laboratoryRepository.findAllByUserIdUser(userEntity.getIdUser());
+            modelAndView.addObject("list", laboratoryEntities);
+        }
 
         return modelAndView;
 
@@ -189,29 +218,26 @@ public class ratLabAPI {
 
     //----------------------- Box API -------------------
     @RequestMapping(value = "/box/add", method = RequestMethod.POST)
-    public ModelAndView box_add(
+    public BoxEntity box_add(
         @RequestParam(value = "projectId")int id_project,
         @RequestParam(value = "typeBox") String type,
-        @RequestParam(value = "specieBox") String specie,
         @RequestParam(value = "qtdMaleBox")Integer qtdMale,
-        @RequestParam(value = "qtdFemaleBox")Integer qtdFemale,
-        @RequestParam(value = "biotecBox") String biotec
+        @RequestParam(value = "qtdFemaleBox")Integer qtdFemale
     ){
         BoxEntity box = new BoxEntity();
         box.setProjectIdProject(id_project);
         box.setTypeBox(type);
-        box.setSpecieBox(specie);
         box.setQtdMaleBox(qtdMale);
         box.setQtdFemaleBox(qtdFemale);
-        box.setBiotecBox(biotec);
-
         boxRepository.save(box);
 
 
-        return box_getbyid(box.getIdBox(),id_project);
+
+
+        return box;
     }
 
-    @RequestMapping(value = "/box/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/box/add22", method = RequestMethod.GET)
     public ModelAndView box_adding(
             @RequestParam(value = "project", required = false) ProjectEntity projectEntity,
             Authentication authentication
@@ -258,6 +284,39 @@ public class ratLabAPI {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/box/delete")
+    public boolean box_delete(
+            @RequestParam(value = "box_id")int id_box,
+            @RequestParam(value = "project_id")int id_project
+    ){
+        BoxEntityPK boxEntityPK = new BoxEntityPK();
+        boxEntityPK.setProjectIdProject(id_project);
+        boxEntityPK.setIdBox(id_box);
+        try{
+            BoxEntity boxEntity = boxRepository.findById(boxEntityPK).get();
+            boxRepository.delete(boxEntity);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @RequestMapping(value = "/box/update")
+    public void box_update(
+            @RequestParam(value = "box_id")int id_box,
+            @RequestParam(value = "project_id")int id_project,
+            @RequestParam(value = "males")int qtd_male,
+            @RequestParam(value = "females")int qtd_female
+    ){
+        BoxEntityPK boxEntityPK = new BoxEntityPK();
+        boxEntityPK.setProjectIdProject(id_project);
+        boxEntityPK.setIdBox(id_box);
+        BoxEntity boxEntity = boxRepository.findById(boxEntityPK).get();
+        boxEntity.setQtdMaleBox(qtd_male);
+        boxEntity.setQtdFemaleBox(qtd_female);
+        boxRepository.save(boxEntity);
+    }
+
 
     //----------------------- Project API -------------------
 
@@ -267,7 +326,9 @@ public class ratLabAPI {
             @RequestParam(value = "n_doc") String n_doc,
             @RequestParam(value = "stats_doc") String stats_doc,
             @RequestParam(value = "laboratory_id") int laboratory_id,
-            @RequestParam(value = "user_id") int user_id
+            @RequestParam(value = "user_id") int user_id,
+            @RequestParam(value = "local") String local,
+            Authentication authentication
 
     ){
         ProjectEntity projectEntity = new ProjectEntity();
@@ -276,10 +337,11 @@ public class ratLabAPI {
         projectEntity.setStatusDocProject(stats_doc);
         projectEntity.setLaboratoryIdLaboratory(laboratory_id);
         projectEntity.setUserIdUser(user_id); // Responsible
-
+        projectEntity.setDateCreateProject(new Date(System.currentTimeMillis()));
+        projectEntity.setLocalProject(local);
         projectRepository.save(projectEntity);
 
-        return project_getbyid(projectEntity.getIdProject(), laboratory_id);
+        return project_listall(authentication);
 
     }
 
@@ -287,8 +349,8 @@ public class ratLabAPI {
     public ModelAndView project_adding(Authentication authentication){
 
         ModelAndView modelAndView = new ModelAndView("/layout/fragments/project/add");
-        modelAndView.addObject("title", "Adicionar Caixa");
-        modelAndView.addObject("description", "adiciona uma nova caixa");
+        modelAndView.addObject("title", "Adicionar Projeto");
+        modelAndView.addObject("description", "adiciona um novo projeto");
         modelAndView.addObject("users", userRepository.findAllByTypeUser(3));
 
         UserEntity userEntity = getUserLogger(authentication);
@@ -313,7 +375,6 @@ public class ratLabAPI {
         ModelAndView modelAndView = new ModelAndView("/layout/fragments/project/getbyid");
         modelAndView.addObject("title", "Detalhes do projeto");
         modelAndView.addObject("description", "mostra informações do projeto");
-
             ProjectEntityPK projectEntityPK = new ProjectEntityPK();
             projectEntityPK.setIdProject(project_id);
             projectEntityPK.setLaboratoryIdLaboratory(laboratory_id);
@@ -322,14 +383,95 @@ public class ratLabAPI {
         modelAndView.addObject("project", projectEntity);
         modelAndView.addObject("responsible", userRepository.findById(projectEntity.getUserIdUser()).get());
         modelAndView.addObject("laboratory", laboratoryRepository.findById(projectEntity.getLaboratoryIdLaboratory()).get());
-        modelAndView.addObject("boxs", boxRepository.findAllByProjectIdProject(projectEntity.getIdProject()));
+        modelAndView.addObject("rats", boxRepository.findAllByTypeBoxAndProjectIdProject("Ratos", projectEntity.getIdProject()));
+        modelAndView.addObject("mice", boxRepository.findAllByTypeBoxAndProjectIdProject("Camundongos", projectEntity.getIdProject()));
+        modelAndView.addObject("rabbit", boxRepository.findAllByTypeBoxAndProjectIdProject("Coelhos", projectEntity.getIdProject()));
+        modelAndView.addObject("cobaio", boxRepository.findAllByTypeBoxAndProjectIdProject("Cobaio", projectEntity.getIdProject()));
 
-
+        ModifierEntity modifierEntity = modifierRepository.findFirstByProjectIdProjectOrderByDateModifierDesc(project_id);
+        if(modifierEntity != null) {
+            long days = ( new Date(System.currentTimeMillis()).getTime() - modifierEntity.getDateModifier().getTime() ) / (1000 * 60 * 60 * 24) ;
+            System.out.println("DAYS: "+days);
+            modelAndView.addObject("days_last_att", days);
+            modelAndView.addObject("last_att", modifierEntity.getMsgModifier());
+        }
         return modelAndView;
 
 
     }
 
+    @RequestMapping(value = "/project/delete")
+    public boolean project_delete(
+            @RequestParam(value = "project_id") int project_id,
+            @RequestParam(value = "laboratory_id") int laboratory_id
+    ){
+
+        ProjectEntityPK projectEntityPK = new ProjectEntityPK();
+        projectEntityPK.setIdProject(project_id);
+        projectEntityPK.setLaboratoryIdLaboratory(laboratory_id);
+        ProjectEntity projectEntity = projectRepository.findById(projectEntityPK).get();
+
+        try{
+            projectRepository.delete(projectEntity);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @RequestMapping(value="/project/listall")
+    public ModelAndView project_listall(Authentication authentication){
+        ModelAndView modelAndView = new ModelAndView("/layout/fragments/project/listall");
+        modelAndView.addObject("title", "Lista de projetos");
+        modelAndView.addObject("description", "");
+
+        UserEntity userEntity = getUserLogger(authentication);
+        List<ProjectEntity> projectEntities = new ArrayList<>();
+
+        if(userEntity.getTypeUser() == 3) {
+           projectEntities = projectRepository.findAllByUserIdUser(userEntity.getIdUser());
+        }else if(userEntity.getTypeUser() == 2) {
+            List<LaboratoryEntity> laboratoryEntities = laboratoryRepository.findAllByUserIdUser(userEntity.getIdUser());
+            for(LaboratoryEntity laboratoryEntity : laboratoryEntities) {
+                projectEntities = (projectRepository.findAllByLaboratoryIdLaboratory(laboratoryEntity.getIdLaboratory()));
+            }
+        }else{
+            projectEntities = (List)projectRepository.findAll();
+        }
+        List<LaboratoryEntity> laboratoryEntities = new ArrayList<>();
+        List<UserEntity> userEntities = new ArrayList<>();
+        for(ProjectEntity projectEntity : projectEntities){
+           userEntities.add(userRepository.findById(projectEntity.getUserIdUser()).get());
+           laboratoryEntities.add(laboratoryRepository.findById(projectEntity.getLaboratoryIdLaboratory()).get());
+        }
+
+
+        modelAndView.addObject("projects", projectEntities);
+        modelAndView.addObject("laboratories", laboratoryEntities);
+        modelAndView.addObject("users", userEntities);
+
+        return modelAndView;
+    }
+
+    //---------------- Atualizações ---------------------
+
+    @RequestMapping(value = "/modifier/add")
+    public void modifier_add(
+            @RequestParam(value = "projectId") int projectID,
+            @RequestParam(value = "msg") String msg,
+            @RequestParam(value = "status") boolean status
+    ){
+        ModifierEntity modifierEntity = new ModifierEntity();
+        modifierEntity.setProjectIdProject(projectID);
+        modifierEntity.setMsgModifier(msg);
+        modifierEntity.setDateModifier(new Date(System.currentTimeMillis()));
+        modifierRepository.save(modifierEntity);
+        if(status){
+           ProjectEntity projectEntity = projectRepository.findByIdProject(projectID);
+           projectEntity.setStatusDocProject("Aceito");
+           projectRepository.save(projectEntity);
+        }
+    }
 
 
 

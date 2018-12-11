@@ -1,6 +1,7 @@
 package com.iscb.RatLab.Entity;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +14,8 @@ public class ProjectEntity {
     private String statusDocProject;
     private int laboratoryIdLaboratory;
     private int userIdUser;
+    private String localProject;
+    private Date dateCreateProject;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,5 +94,25 @@ public class ProjectEntity {
 
     public void setUserIdUser(int userIdUser) {
         this.userIdUser = userIdUser;
+    }
+
+    @Basic
+    @Column(name = "local_project")
+    public String getLocalProject() {
+        return localProject;
+    }
+
+    public void setLocalProject(String localProject) {
+        this.localProject = localProject;
+    }
+
+    @Basic
+    @Column(name = "date_create_project")
+    public Date getDateCreateProject() {
+        return dateCreateProject;
+    }
+
+    public void setDateCreateProject(Date dateCreateProject) {
+        this.dateCreateProject = dateCreateProject;
     }
 }

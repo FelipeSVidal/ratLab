@@ -12,8 +12,6 @@ public class BoxEntity {
     private Integer qtdMaleBox;
     private Integer qtdFemaleBox;
     private String typeBox;
-    private String specieBox;
-    private String biotecBox;
     private int projectIdProject;
 
     @Id
@@ -57,25 +55,6 @@ public class BoxEntity {
         this.typeBox = typeBox;
     }
 
-    @Basic
-    @Column(name = "specie_box")
-    public String getSpecieBox() {
-        return specieBox;
-    }
-
-    public void setSpecieBox(String specieBox) {
-        this.specieBox = specieBox;
-    }
-
-    @Basic
-    @Column(name = "biotec_box")
-    public String getBiotecBox() {
-        return biotecBox;
-    }
-
-    public void setBiotecBox(String biotecBox) {
-        this.biotecBox = biotecBox;
-    }
 
     @Id
     @Column(name = "project_id_project")
@@ -96,14 +75,12 @@ public class BoxEntity {
                 projectIdProject == boxEntity.projectIdProject &&
                 Objects.equals(qtdMaleBox, boxEntity.qtdMaleBox) &&
                 Objects.equals(qtdFemaleBox, boxEntity.qtdFemaleBox) &&
-                Objects.equals(typeBox, boxEntity.typeBox) &&
-                Objects.equals(specieBox, boxEntity.specieBox) &&
-                Objects.equals(biotecBox, boxEntity.biotecBox);
+                Objects.equals(typeBox, boxEntity.typeBox);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idBox, qtdMaleBox, qtdFemaleBox, typeBox, specieBox, biotecBox, projectIdProject);
+        return Objects.hash(idBox, qtdMaleBox, qtdFemaleBox, typeBox, projectIdProject);
     }
 }

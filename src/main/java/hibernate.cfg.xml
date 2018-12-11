@@ -10,5 +10,6 @@
         <mapping class="com.iscb.RatLab.Entity.LaboratoryEntity"/>
         <mapping class="com.iscb.RatLab.Entity.ProjectEntity"/>
         <mapping class="com.iscb.RatLab.Entity.UserEntity"/>
+        <mapping class="com.iscb.RatLab.Entity.ModifierEntity"/>
     </session-factory>
 </hibernate-configuration>

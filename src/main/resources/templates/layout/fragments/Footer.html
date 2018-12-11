@@ -3,7 +3,7 @@
 
 <body>
         <div th:fragment="footer-load">
-            <footer class="main-footer">
+            <footer th:unless="${title == null}" class="main-footer">
                 <!-- To the right -->
                 <div class="pull-right hidden-xs">
                     Anything you want
@@ -13,7 +13,8 @@
             </footer>
 
             <script th:src="@{/webjars/jquery/jquery.js}" type="text/javascript"></script>
-            <script th:src="@{/webjars/bootstrap/js/bootstrap.js}" type="text/javascript"></script>
+            <!-- script th:src="@{/webjars/bootstrap/js/bootstrap.js}" type="text/javascript"></script -->
+            <script th:src="@{/js/bootstrap.js}" type="text/javascript"></script>
             <script th:src="@{/js/jquery.redirect.js}" type="text/javascript"></script>
             <script th:src="@{/js/jquery.dataTables.js}" type="text/javascript"></script>
             <script th:src="@{/js/dataTables.bootstrap.js}" type="text/javascript"></script>

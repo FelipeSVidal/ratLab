@@ -26,14 +26,6 @@
                 <span>Laboratório:</span>
                 <th:block th:text="${laboratory.getNameLaboratory()}"></th:block>
             </h3>
-            <h3>
-                <span>Criado em:</span>
-                <th:block th:text="${project.getDateCreateProject()}"></th:block>
-            </h3>
-            <h3>
-                <span>Última atualização há:</span>
-                <th:block th:text="${days_last_att}"></th:block> Dias <a href="#" class="pull-right" data-toggle="modal" data-target="#modal-att">Atualizar</a>
-            </h3>
 
             <hr>
             <!-- RATOS -->
@@ -51,15 +43,12 @@
                 <div class="box-body">
 
                     <!-- FOR DAQUI  -->
-                    <div class="row" id="Ratos">
+                    <div class="row">
                         <th:block th:each="rat : ${rats}">
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="box box-info"  id="box">
                                     <div class="box-header" ><th:block th:text="${rat.getIdBox()}"></th:block> <!-- Usar modulo -->
                                         <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" th:onclick="|enable_input('${rat.getIdBox()}')|">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                             <!-- Remove Button -->
                                             <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#modal-info"
                                                     th:attr="data-n-box=${rat.getIdBox()}, data-box-id=${rat.getIdBox()}, data-box-project=${rat.getProjectIdProject()}">
@@ -71,12 +60,10 @@
                                         <div class="info-box"><span class="info-box-icon bg-aqua"><i class="fa fa-archive"></i></span>
 
                                             <div class="info-box-content">
-                                                <span class="info-box-text col-xs-12">Machos</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdMaleBox" type="text" th:value="${rat.getQtdMaleBox()}" style="max-height:20px;">
-                                            <!--    <span class="info-box-number" th:text=""></span> -->
-                                                <span class="info-box-text col-xs-12">Femeas</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdFemaleBox" type="text" th:value="${rat.getQtdFemaleBox()}" style="max-height:20px;">
-                                            <!--    <span class="info-box-number col-xs-12" th:text="${rat.getQtdFemaleBox()}"></span> -->
+                                                <span class="info-box-text">Machos</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdMaleBox()}"></span>
+                                                <span class="info-box-text">Femeas</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdFemaleBox()}"></span>
                                             </div>
 
 
@@ -85,21 +72,13 @@
                                         </div>
                                     </div>
                                     <div class="box-footer center-block">
-                                        <a href="#" th:onclick="|atualizar('${rat.getIdBox()}','${rat.getProjectIdProject()}')|">Atualizar
+                                        <a href="/project/update">Atualizar
                                             <i class="fa fa-arrow-circle-right"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </th:block>
-                            <div class="col-md-3 col-sm-6 col-xs-12" style="height: 229px; display: flex; align-items: center; justify-content: center;">
-                                <button class="info-box-icon bg-green" data-toggle="modal" data-target="#modal-new-box" data-type="Ratos"><i class="fa fa-plus-circle "></i></button>
-
-                                <!--
-                                   AO CLICKAR NO MAIS, DAR APPEND NO BLOCO ANTERIOR PARA ADICIONAR UMA NOVA CAIXA!
-
-                                -->
-                            </div>
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -120,15 +99,12 @@
                 <div class="box-body">
 
                     <!-- FOR DAQUI  -->
-                    <div class="row" id="Camundongos">
+                    <div class="row">
                         <th:block th:each="rat : ${mice}">
                             <div class="col-md-3 col-sm-6 col-xs-12">
-                                <div class="box box-info">
+                                <div class="box box-info"  id="box">
                                     <div class="box-header" ><th:block th:text="${rat.getIdBox()}"></th:block> <!-- Usar modulo -->
                                         <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" th:onclick="|enable_input('${rat.getIdBox()}')|">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                             <!-- Remove Button -->
                                             <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#modal-info"
                                                     th:attr="data-n-box=${rat.getIdBox()}, data-box-id=${rat.getIdBox()}, data-box-project=${rat.getProjectIdProject()}">
@@ -140,12 +116,10 @@
                                         <div class="info-box"><span class="info-box-icon bg-aqua"><i class="fa fa-archive"></i></span>
 
                                             <div class="info-box-content">
-                                                <span class="info-box-text col-xs-12">Machos</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdMaleBox" type="text" th:value="${rat.getQtdMaleBox()}" style="max-height:20px;">
-                                                <!--    <span class="info-box-number" th:text=""></span> -->
-                                                <span class="info-box-text col-xs-12">Femeas</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdFemaleBox" type="text" th:value="${rat.getQtdFemaleBox()}" style="max-height:20px;">
-                                                <!--    <span class="info-box-number col-xs-12" th:text="${rat.getQtdFemaleBox()}"></span> -->
+                                                <span class="info-box-text">Machos</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdMaleBox()}"></span>
+                                                <span class="info-box-text">Femeas</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdFemaleBox()}"></span>
                                             </div>
 
 
@@ -154,21 +128,13 @@
                                         </div>
                                     </div>
                                     <div class="box-footer center-block">
-                                        <a href="#" th:onclick="|atualizar('${rat.getIdBox()}','${rat.getProjectIdProject()}')|">Atualizar
+                                        <a href="/project/update">Atualizar
                                             <i class="fa fa-arrow-circle-right"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </th:block>
-                        <div class="col-md-3 col-sm-6 col-xs-12" style="height: 229px; display: flex; align-items: center; justify-content: center;">
-                            <button class="info-box-icon bg-green" data-toggle="modal" data-target="#modal-new-box" data-type="Camundongos"><i class="fa fa-plus-circle "></i></button>
-
-                            <!--
-                               AO CLICKAR NO MAIS, DAR APPEND NO BLOCO ANTERIOR PARA ADICIONAR UMA NOVA CAIXA!
-
-                            -->
-                        </div>
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -189,15 +155,12 @@
                 <div class="box-body">
 
                     <!-- FOR DAQUI  -->
-                    <div class="row" id="Coelhos">
+                    <div class="row">
                         <th:block th:each="rat : ${rabbit}">
                             <div class="col-md-3 col-sm-6 col-xs-12">
-                                <div class="box box-info">
+                                <div class="box box-info"  id="box">
                                     <div class="box-header" ><th:block th:text="${rat.getIdBox()}"></th:block> <!-- Usar modulo -->
                                         <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" th:onclick="|enable_input('${rat.getIdBox()}')|">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                             <!-- Remove Button -->
                                             <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#modal-info"
                                                     th:attr="data-n-box=${rat.getIdBox()}, data-box-id=${rat.getIdBox()}, data-box-project=${rat.getProjectIdProject()}">
@@ -209,12 +172,10 @@
                                         <div class="info-box"><span class="info-box-icon bg-aqua"><i class="fa fa-archive"></i></span>
 
                                             <div class="info-box-content">
-                                                <span class="info-box-text col-xs-12">Machos</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdMaleBox" type="text" th:value="${rat.getQtdMaleBox()}" style="max-height:20px;">
-                                                <!--    <span class="info-box-number" th:text=""></span> -->
-                                                <span class="info-box-text col-xs-12">Femeas</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdFemaleBox" type="text" th:value="${rat.getQtdFemaleBox()}" style="max-height:20px;">
-                                                <!--    <span class="info-box-number col-xs-12" th:text="${rat.getQtdFemaleBox()}"></span> -->
+                                                <span class="info-box-text">Machos</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdMaleBox()}"></span>
+                                                <span class="info-box-text">Femeas</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdFemaleBox()}"></span>
                                             </div>
 
 
@@ -223,21 +184,13 @@
                                         </div>
                                     </div>
                                     <div class="box-footer center-block">
-                                        <a href="#" th:onclick="|atualizar('${rat.getIdBox()}','${rat.getProjectIdProject()}')|">Atualizar
+                                        <a href="/project/update">Atualizar
                                             <i class="fa fa-arrow-circle-right"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </th:block>
-                        <div class="col-md-3 col-sm-6 col-xs-12" style="height: 229px; display: flex; align-items: center; justify-content: center;">
-                            <button class="info-box-icon bg-green" data-toggle="modal" data-target="#modal-new-box" data-type="Coelhos"><i class="fa fa-plus-circle "></i></button>
-
-                            <!--
-                               AO CLICKAR NO MAIS, DAR APPEND NO BLOCO ANTERIOR PARA ADICIONAR UMA NOVA CAIXA!
-
-                            -->
-                        </div>
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -258,15 +211,12 @@
                 <div class="box-body">
 
                     <!-- FOR DAQUI  -->
-                    <div class="row" id="Cobaio">
+                    <div class="row">
                         <th:block th:each="rat : ${cobaio}">
                             <div class="col-md-3 col-sm-6 col-xs-12">
-                                <div class="box box-info">
+                                <div class="box box-info"  id="box">
                                     <div class="box-header" ><th:block th:text="${rat.getIdBox()}"></th:block> <!-- Usar modulo -->
                                         <div class="box-tools pull-right">
-                                            <button type="button" class="btn btn-box-tool" th:onclick="|enable_input('${rat.getIdBox()}')|">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
                                             <!-- Remove Button -->
                                             <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#modal-info"
                                                     th:attr="data-n-box=${rat.getIdBox()}, data-box-id=${rat.getIdBox()}, data-box-project=${rat.getProjectIdProject()}">
@@ -278,12 +228,10 @@
                                         <div class="info-box"><span class="info-box-icon bg-aqua"><i class="fa fa-archive"></i></span>
 
                                             <div class="info-box-content">
-                                                <span class="info-box-text col-xs-12">Machos</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdMaleBox" type="text" th:value="${rat.getQtdMaleBox()}" style="max-height:20px;">
-                                                <!--    <span class="info-box-number" th:text=""></span> -->
-                                                <span class="info-box-text col-xs-12">Femeas</span>
-                                                <input th:class="'input-'+${rat.getIdBox()}+' col-xs-12'" disabled name="QtdFemaleBox" type="text" th:value="${rat.getQtdFemaleBox()}" style="max-height:20px;">
-                                                <!--    <span class="info-box-number col-xs-12" th:text="${rat.getQtdFemaleBox()}"></span> -->
+                                                <span class="info-box-text">Machos</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdMaleBox()}"></span>
+                                                <span class="info-box-text">Femeas</span>
+                                                <span class="info-box-number" th:text="${rat.getQtdFemaleBox()}"></span>
                                             </div>
 
 
@@ -292,21 +240,13 @@
                                         </div>
                                     </div>
                                     <div class="box-footer center-block">
-                                        <a href="#" th:onclick="|atualizar('${rat.getIdBox()}','${rat.getProjectIdProject()}')|">Atualizar
+                                        <a href="/project/update">Atualizar
                                             <i class="fa fa-arrow-circle-right"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </th:block>
-                        <div class="col-md-3 col-sm-6 col-xs-12" style="height: 229px; display: flex; align-items: center; justify-content: center;">
-                            <button class="info-box-icon bg-green" data-toggle="modal" data-target="#modal-new-box" data-type="Cobaio"><i class="fa fa-plus-circle "></i></button>
-
-                            <!--
-                               AO CLICKAR NO MAIS, DAR APPEND NO BLOCO ANTERIOR PARA ADICIONAR UMA NOVA CAIXA!
-
-                            -->
-                        </div>
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -338,60 +278,6 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-
-    <div class="modal fade modal-info " id="modal-new-box">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">Adicionar Caixa</h4>
-                </div>
-                <div class="modal-body">
-                    <p> Quantas caixas deseja adicionar? </p>
-                    <input class="box-input text-black" type="number" value="0" id="n-box-add">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-outline" id="add-box" data-type="">Adicionar</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
-
-    <div class="modal fade modal-info " id="modal-att">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span></button>
-                    <h4 class="modal-title">Escrever atualização</h4>
-                </div>
-                <div class="modal-body col-lg-12">
-                    <th:block th:if="${project.getStatusDocProject() == 'Analise'}">
-                        <h3>
-                            <label for="ethic_status_charge"> Documento de ética foi aceito? </label>
-                            <input id="ethic_status_charge" type="checkbox">
-                        </h3>
-                    </th:block>
-                    <label for="ta-last"> Última atualização: </label>
-                    <textarea id="ta-last" class="text-black form-control" rows="5" disabled th:text="${last_att}"></textarea>
-                    <label for="ta-new"> Nova atualização: </label>
-                    <textarea id="ta-new" class="form-control text-black"  rows="5"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-outline" id="add-att">Atualizar</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-
 </section>
 <div layout:fragment="extra-scripts">
     <script>
@@ -418,57 +304,8 @@
                 }
             });
         });
-        $('#modal-new-box').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var type = button.data('type');
-            var modal = $(this);
-            modal.find('.modal-footer #add-box').on("click", function () {
-                var qtd = modal.find('.modal-body #n-box-add').val();
-                add_new__div_box(type,qtd);
-            })
-        });
-        $('#modal-att').on('show.bs.modal', function (event) {
-            var modal = $(this);
-            modal.find('.modal-footer #add-att').on("click", function () {
-                var msg = modal.find('.modal-body #ta-new').val();
-                new_att(msg, modal.find('.modal-body #ethic_status_charge').is(":checked"));
-            })
-        });
 
 
-
-        function enable_input(id){
-            $(".input-"+id).each(function () {
-                $(this).prop('disabled', false);
-            });
-        }
-        function atualizar(box_id, project_id){
-                var input_male = $(".input-"+box_id).eq(0);
-                var input_female = $(".input-"+box_id).eq(1);
-                var qtd_male = input_male.val();
-                var qtd_female = input_female.val();
-                $.get("/box/update",{box_id:box_id, project_id:project_id, males:qtd_male, females:qtd_female});
-                input_male.prop('disabled', true);
-                input_female.prop('disabled', true);
-        }
-
-        function add_new__div_box(div_id, qtd){
-            var project_id = [[${project.getIdProject()}]];
-            for(var i = 0;i<qtd;i++){
-                $.post("/box/add", {projectId: project_id, typeBox: div_id, qtdMaleBox: 0, qtdFemaleBox: 0});
-            }
-            location.reload();
-
-        }
-
-        function new_att(msg, bool) {
-            console.log(msg);
-            if (msg.length > 0) {
-                var project_id = [[${project.getIdProject()}]];
-                $.post("/modifier/add", {projectId: project_id, msg: msg, status:bool});
-            }
-            location.reload();
-        }
     </script>
 </div>
 

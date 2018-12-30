@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -433,6 +435,12 @@ public class ratLabAPI {
         ProjectEntity projectEntity = projectRepository.findById(projectEntityPK).get();
 
         try{
+            List<BoxEntity> boxEntities = boxRepository.findAllByProjectIdProject(projectEntity.getIdProject());
+            for(BoxEntity boxEntity : boxEntities){
+                boxRepository.delete(boxEntity);
+            }
+            List<ModifierEntity> modifierEntities = modifierRepository.findAllByProjectIdProject(projectEntity.getIdProject());
+            modifierRepository.deleteAll(modifierEntities);
             projectRepository.delete(projectEntity);
             return true;
         }catch (Exception e){
@@ -494,7 +502,130 @@ public class ratLabAPI {
         }
     }
 
+    //----------------- Relatórios -----------------------
+    @RequestMapping(value = "/reports")
+    public ModelAndView reports(){
+        ModelAndView modelAndView = new ModelAndView("/reports");
 
+        List<BoxEntity> allbox = (List)boxRepository.findAll();
+
+        int[] total_ratos = new int[3];
+        int[] total_camundongos = new int[3];
+        int[] total_coelhos = new int[3];
+        int[] total_cobaio = new int[3];
+
+        int[] sala1 = new int[3];
+        int[] sala2 = new int[3];
+        int[] salaprof = new int[3];
+        int[] salaprofa = new int[3];
+
+        HashMap<String, int[]> labs = new HashMap<>();
+        for(BoxEntity boxEntity : allbox){
+            int macho = boxEntity.getQtdMaleBox();
+            int femea = boxEntity.getQtdFemaleBox();
+            switch (boxEntity.getTypeBox()){
+                case "Ratos":
+                    total_ratos[0] += macho;
+                    total_ratos[1] += femea;
+                    System.out.println("[1]");
+                    break;
+                case "Camundongos":
+                    total_camundongos[0] += macho;
+                    total_camundongos[1] += femea;
+                    System.out.println("[2] - "+macho+"\t"+femea);
+                    break;
+                case "Coelhos":
+                    total_coelhos[0] += macho;
+                    total_coelhos[1] += femea;
+                    System.out.println("[3]");
+                    break;
+                case "Cobaio":
+                    total_cobaio[0] += macho;
+                    total_cobaio[1] += femea;
+                    System.out.println("[4]");
+                    break;
+            }
+
+
+
+            ProjectEntity projectEntity = projectRepository.findByIdProject(boxEntity.getProjectIdProject());
+            switch (projectEntity.getLocalProject()){
+                case "Sala 1":
+                    sala1[0] += macho;
+                    sala1[1] += femea;
+
+                    break;
+                case "Sala 2":
+                    sala2[0] += macho;
+                    sala2[1] += femea;
+
+                    break;
+                case "Sala Professor Nilberto":
+                    salaprof[0] += macho;
+                    salaprof[1] += femea;
+
+                    break;
+                case "Sala Professora Ana Maria":
+                    salaprofa[0] += macho;
+                    salaprofa[1] += femea;
+
+                    break;
+            }
+            LaboratoryEntity laboratoryEntity = laboratoryRepository.findById(projectEntity.getLaboratoryIdLaboratory()).get();
+            try{
+                int[] valores = labs.get(laboratoryEntity.getInitialsLaboratory());
+                valores[0] += macho;
+                valores[1] += femea;
+                valores[2] += (macho + femea);
+                labs.put(laboratoryEntity.getInitialsLaboratory(), valores);
+            }catch(Exception e) {
+                labs.put(laboratoryEntity.getInitialsLaboratory(), new int[]{macho, femea, (macho + femea)});
+            }
+        }
+
+
+        total_ratos[2] = total_ratos[0] + total_ratos[1];
+        total_coelhos[2] = total_coelhos[0] + total_coelhos[1];
+        total_camundongos[2] = total_camundongos[0] + total_camundongos[1];
+        total_cobaio[2] = total_cobaio[0] + total_cobaio[1];
+
+        sala1[2] = sala1[0] + sala1[1];
+        sala2[2] = sala2[0] + sala2[1];
+        salaprof[2] = salaprof[0] + salaprof[1];
+        salaprofa[2] = salaprofa[0] + salaprofa[1];
+
+        int[] total = new int[3];
+        total[0] = total_camundongos[0] + total_cobaio[0] + total_coelhos[0] + total_ratos[0];
+        total[1] = total_camundongos[1] + total_cobaio[1] + total_coelhos[1] + total_ratos[1];
+        total[2] = total_camundongos[2] + total_cobaio[2] + total_coelhos[2] + total_ratos[2];
+
+
+        modelAndView.addObject("labs",labs);
+        System.out.println("RATOS: "+total_ratos[0]);
+        System.out.println("COELHOS: "+total_coelhos[0]);
+        System.out.println("CAMUNDONGOS: "+total_camundongos[0]);
+        System.out.println("COBAIO: "+total_cobaio[0]);
+        modelAndView.addObject("ratos", total_ratos);
+        modelAndView.addObject("coelhos",total_coelhos);
+        modelAndView.addObject("camundongos", total_camundongos);
+        modelAndView.addObject("cobaio", total_cobaio);
+
+        modelAndView.addObject("sala1", sala1);
+        modelAndView.addObject("sala2", sala2);
+        modelAndView.addObject("prof", salaprof);
+        modelAndView.addObject("profa", salaprofa);
+
+        modelAndView.addObject("total", total);
+
+
+
+
+
+
+
+
+        return modelAndView;
+    }
 
 
 

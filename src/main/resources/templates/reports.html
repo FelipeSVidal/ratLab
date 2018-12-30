@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!--suppress BadExpressionStatementJS -->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/DefaultLayout}">
+    <head th:replace="layout/fragments/Header :: head-load">
+    </head>
+
+
+    <section layout:fragment="content-central">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Quantidade no instituto</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                         </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="barTotal"></canvas>
+                        <span><i class="fa fa-pie-chart"></i>Total: <th:block th:text="${total[2]}"></th:block></span>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Quantidade de animais por laboratório</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="barLab"></canvas>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Quantidade de animais por biotério</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                         </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="barBio"></canvas>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Quantidade de animais por especie</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <canvas id="barEsp"></canvas>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+    <div layout:fragment="extra-scripts">
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            new Chart($("#barLab"),{
+                type:'bar',
+                data: {
+                    labels: [
+                        [# th:each="lab : ${labs.keySet()}"]
+                            [[${lab}]],
+                        [/]
+                    ],
+                    datasets:[
+                        {
+                            label: "Macho",
+                            backgroundColor: "#3e95cd",
+                            data: [
+                                [# th:each="valores : ${labs.values()}"]
+                                    [[ ${valores[0]} ]],
+                                [/]
+                            ]
+                        },
+                        {
+                            label: "Femea",
+                            backgroundColor: "#FF69B4",
+                            data: [
+                                [# th:each="valores : ${labs.values()}"]
+                                    [[ ${valores[1]} ]],
+                                [/]
+                            ]
+                        },
+                        {
+                            label: "Total",
+                            backgroundColor: "#8e5ea2",
+                            data: [
+                                [# th:each="valores : ${labs.values()}"]
+                                    [[ ${valores[2]} ]],
+                                [/]
+                            ]
+                        }
+                    ]
+
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Laboratórios'
+                    }
+                }
+            });
+            new Chart($("#barBio"),{
+                type:'bar',
+                data:{
+                    labels:["Sala 1", "Sala 2", "Sala Prof. Nilberto", "Sala Profa. Ana Maria"],
+                    datasets:[
+                        {
+                            label: "Macho",
+                            backgroundColor: "#3e95cd",
+                            data: [
+                                [[${sala1[0]}]], [[${sala2[0]}]], [[${prof[0]}]], [[${profa[0]}]]
+                            ]
+                        },
+                        {
+                            label: "Femea",
+                            backgroundColor: "#FF69B4",
+                            data:[
+                                [[${sala1[1]}]], [[${sala2[1]}]], [[${prof[1]}]], [[${profa[1]}]]
+                            ]
+                        },
+                        {
+                            label: "Total",
+                            backgroundColor: "#8e5ea2",
+                            data: [
+                                [[${sala1[2]}]], [[${sala2[2]}]], [[${prof[2]}]], [[${profa[2]}]]
+                            ]
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Biotérios'
+                    }
+                }
+            });
+            new Chart($("#barEsp"),{
+                type:'bar',
+                data:{
+                    labels:["Ratos", "Coelhos", "Camundongos", "Cobaio"],
+                    datasets:[
+                        {
+                            label: "Macho",
+                            backgroundColor: "#3e95cd",
+                            data: [
+                                [[${ratos[0]}]], [[${coelhos[0]}]], [[${camundongos[0]}]], [[${cobaio[0]}]]
+                            ]
+                        },
+                        {
+                            label: "Femea",
+                            backgroundColor: "#FF69B4",
+                            data:[
+                                [[${ratos[1]}]], [[${coelhos[1]}]], [[${camundongos[1]}]], [[${cobaio[1]}]]
+                            ]
+                        },
+                        {
+                            label: "Total",
+                            backgroundColor: "#8e5ea2",
+                            data: [
+                                [[${ratos[2]}]], [[${coelhos[2]}]], [[${camundongos[2]}]], [[${cobaio[2]}]]
+                            ]
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Espécies'
+                    }
+                }
+            });
+            new Chart($("#barTotal"),{
+                type:'doughnut',
+                data:{
+                    labels:["Macho", "Femea"],
+                    datasets:[
+                        {
+                            label: "Comparativo de Machos e Femeas",
+                            backgroundColor: ["#3e95cd","#FF69B4"],
+                            data: [
+                                [[${total[0]}]], [[${total[1]}]]
+                            ]
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Espécies'
+                    }
+                }
+            });
+
+            /*]]>*/
+        </script>
+
+
+    </div>
+</html>

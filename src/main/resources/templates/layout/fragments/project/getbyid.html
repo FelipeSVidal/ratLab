@@ -13,6 +13,11 @@
             <div class="inline">
                 <h1>
                     <th:block th:text="${project.getNameProject()}"></th:block>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#modal-complet">
+                            <i class="fa fa-check-circle fa-3x" style="color: #01ff70"></i>
+                        </button>
+                    </div>
                 </h1>
             </div>
         </div>
@@ -391,6 +396,26 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade modal-info " id="modal-complet">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Concluir Projeto</h4>
+                </div>
+                <div class="modal-body col-lg-12">
+                    <label> Deseja concluir seu projeto? </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-outline" id="project-conclude">Concluir</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 </section>
 <div layout:fragment="extra-scripts">
@@ -434,6 +459,12 @@
                 new_att(msg, modal.find('.modal-body #ethic_status_charge').is(":checked"));
             })
         });
+        $('#modal-complet').on('show.bs.modal', function (event) {
+            var modal = $(this);
+            modal.find('.modal-footer #project-conclude').on("click", function () {
+                delete_project();
+            })
+        });
 
 
 
@@ -468,6 +499,13 @@
                 $.post("/modifier/add", {projectId: project_id, msg: msg, status:bool});
             }
             location.reload();
+        }
+
+        function delete_project(){
+            var project_id = [[${project.getIdProject()}]];
+            var lab_id = [[${project.getLaboratoryIdLaboratory()}]];
+            $.post("/project/delete", {project_id: project_id, laboratory_id: lab_id});
+            $.redirect("/project/listall");
         }
     </script>
 </div>

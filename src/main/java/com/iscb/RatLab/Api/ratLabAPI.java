@@ -39,17 +39,17 @@ public class ratLabAPI {
     // --------------- SYSTEM --------------------
     @RequestMapping("/login")
     public ModelAndView login(){
-        ModelAndView modelAndView = new ModelAndView("/login");
+        ModelAndView modelAndView = new ModelAndView("login");
         return modelAndView;
     }
     @RequestMapping("/register")
     public ModelAndView register(){
-        ModelAndView modelAndView = new ModelAndView("/register");
+        ModelAndView modelAndView = new ModelAndView("register");
         return modelAndView;
     }
     @RequestMapping("/")
     public ModelAndView hello(){
-        ModelAndView modelAndView = new ModelAndView("/home");
+        ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("title", "Página inicial");
         modelAndView.addObject("description", "Página inicial do sistema");
         return modelAndView;
@@ -71,7 +71,7 @@ public class ratLabAPI {
 
     @RequestMapping(value = "/user/getbyid")
     public ModelAndView user_getbyId(@RequestParam(value = "id", defaultValue = "null") int id){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/user/getbyid");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/user/getbyid");
         if(id == 0){
 
         }else {
@@ -100,7 +100,7 @@ public class ratLabAPI {
 
     @RequestMapping("/user/getall")
     public ModelAndView user_getall(){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/user/listall");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/user/listall");
         modelAndView.addObject("title", "Lista de Usuários");
         modelAndView.addObject("description", "mostra todos os usuários");
         modelAndView.addObject("users", userRepository.findAll());
@@ -110,7 +110,7 @@ public class ratLabAPI {
 
     @RequestMapping("/user/getbytype")
     public ModelAndView user_getbytype(@RequestParam(value = "type", defaultValue = "0") int type){
-        ModelAndView modelAndView = new ModelAndView("/hello");
+        ModelAndView modelAndView = new ModelAndView("hello");
      //   modelAndView.addObject("List", userRepository.findAllByUserTypeIdUserType(type));
 
         return modelAndView;
@@ -118,7 +118,7 @@ public class ratLabAPI {
 
     @RequestMapping(value = "/user/add", method = RequestMethod.GET)
     public ModelAndView user_adding(){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/user/add");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/user/add");
         modelAndView.addObject("title", "Adicionar Usuário");
         modelAndView.addObject("description", "Adicione um novo usuário");
         return modelAndView;
@@ -173,7 +173,7 @@ public class ratLabAPI {
 
     @RequestMapping(value = "/lab/add", method = RequestMethod.GET)
     public ModelAndView lab_adding(){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/laboratory/add");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/laboratory/add");
         modelAndView.addObject("title", "Adicionar Laboratório");
         modelAndView.addObject("description", "Adicione um novo laboratório");
 
@@ -187,7 +187,7 @@ public class ratLabAPI {
     public ModelAndView lab_getbyid(
             @RequestParam(value = "id") int id
     ){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/laboratory/getbyid");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/laboratory/getbyid");
         modelAndView.addObject("title", "Detalhes do Laboratório");
         modelAndView.addObject("description", "mostra os detalhes do laboratório");
 
@@ -203,7 +203,7 @@ public class ratLabAPI {
 
     @RequestMapping(value = "/lab/listall")
     public ModelAndView lab_getall(Authentication authentication){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/laboratory/listall");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/laboratory/listall");
         modelAndView.addObject("title", "Detalhes do Laboratório");
         modelAndView.addObject("description", "mostra os detalhes do laboratório");
 
@@ -266,7 +266,7 @@ public class ratLabAPI {
             @RequestParam(value = "project", required = false) ProjectEntity projectEntity,
             Authentication authentication
     ){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/box/add");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/box/add");
         modelAndView.addObject("title", "Adicionar Caixa");
         modelAndView.addObject("description", "adiciona uma nova caixa");
 
@@ -291,7 +291,7 @@ public class ratLabAPI {
             @RequestParam(value = "id")int id,
             @RequestParam(value = "project_id")int id_project
     ){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/box/getbyid");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/box/getbyid");
         modelAndView.addObject("title", "Detalhes da caixa");
         modelAndView.addObject("description", "mostra os detalhes da caixa");
 
@@ -372,7 +372,7 @@ public class ratLabAPI {
     @RequestMapping(value = "/project/add", method = RequestMethod.GET)
     public ModelAndView project_adding(Authentication authentication){
 
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/project/add");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/project/add");
         modelAndView.addObject("title", "Adicionar Projeto");
         modelAndView.addObject("description", "adiciona um novo projeto");
 
@@ -395,7 +395,7 @@ public class ratLabAPI {
             @RequestParam(value = "laboratory_id") int laboratory_id
     ){
 
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/project/getbyid");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/project/getbyid");
         modelAndView.addObject("title", "Detalhes do projeto");
         modelAndView.addObject("description", "mostra informações do projeto");
             ProjectEntityPK projectEntityPK = new ProjectEntityPK();
@@ -450,7 +450,7 @@ public class ratLabAPI {
 
     @RequestMapping(value="/project/listall")
     public ModelAndView project_listall(Authentication authentication){
-        ModelAndView modelAndView = new ModelAndView("/layout/fragments/project/listall");
+        ModelAndView modelAndView = new ModelAndView("layout/fragments/project/listall");
         modelAndView.addObject("title", "Lista de projetos");
         modelAndView.addObject("description", "");
 
